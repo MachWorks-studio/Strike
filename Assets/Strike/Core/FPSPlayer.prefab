@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2141095551643560769
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7178060273450801907}
+  - component: {fileID: 1677526177477413982}
+  m_Layer: 0
+  m_Name: PlayerInputHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7178060273450801907
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141095551643560769}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -55.15745, y: -1.00002, z: -45.60246}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8452989655959830653}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1677526177477413982
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2141095551643560769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d8ce70a0f69160439d2fbfb7a33143c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerInputHandler
+  playerControls: {fileID: -944628639613478452, guid: 12fe9ed637c8ea146b9c7a3821e2ad86, type: 3}
+  actionMapName: Player
+  movement: Movement
+  rotation: Rotation
+  jump: Jump
+  sprint: Sprint
 --- !u!1 &3260723181476246868
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,10 +59,11 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8452989655959830653}
-  - component: {fileID: 5455087833577057804}
+  - component: {fileID: 5896871234749633123}
+  - component: {fileID: 3030196188718479190}
   m_Layer: 0
-  m_Name: FPSController
-  m_TagString: Untagged
+  m_Name: FPSPlayer
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -31,9 +82,10 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4023690004531545669}
+  - {fileID: 7178060273450801907}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!143 &5455087833577057804
+--- !u!143 &5896871234749633123
 CharacterController:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,6 +110,27 @@ CharacterController:
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &3030196188718479190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3260723181476246868}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2360060cf059b346b1bd80bcb89b1ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FirstPersonController
+  walkSpeed: 3
+  sprintMultiplier: 2
+  jumpForce: 5
+  gravityMultiplier: 1
+  mouseSensitivity: 5
+  upDownLookRange: 80
+  characterController: {fileID: 5896871234749633123}
+  mainCamera: {fileID: 8650207356951907041}
+  playerInputHandler: {fileID: 1677526177477413982}
 --- !u!1 &8629522930648339855
 GameObject:
   m_ObjectHideFlags: 0
@@ -70,7 +143,6 @@ GameObject:
   - component: {fileID: 8650207356951907041}
   - component: {fileID: 2840576892011490724}
   - component: {fileID: 4073275462226819648}
-  - component: {fileID: 6901654246463731113}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -196,15 +268,3 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
---- !u!114 &6901654246463731113
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8629522930648339855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1d8ce70a0f69160439d2fbfb7a33143c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: '::'

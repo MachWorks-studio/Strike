@@ -1,9 +1,9 @@
 {
     "version": 1,
-    "name": "IMC_FPSController",
+    "name": "PlayerInputs",
     "maps": [
         {
-            "name": "Default",
+            "name": "Player",
             "id": "6b0a8f64-aff6-44a0-8ce2-a43c68fbaa44",
             "actions": [
                 {
@@ -16,18 +16,27 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "PrimaryFire",
+                    "name": "Rotation",
+                    "type": "Value",
+                    "id": "448b295c-eae4-4015-bc44-a00743c574cf",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Jump",
                     "type": "Button",
-                    "id": "914da574-6f4f-410c-9739-885ef3e49eb8",
+                    "id": "5e12d3fa-cbb3-46b9-bace-58344b08414f",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Jump",
+                    "name": "Sprint",
                     "type": "Button",
-                    "id": "5e12d3fa-cbb3-46b9-bace-58344b08414f",
+                    "id": "9bacb85b-2b87-4ec7-ada6-3671cda01b7d",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -103,28 +112,6 @@
                 },
                 {
                     "name": "",
-                    "id": "f4d19a77-c869-4050-b587-77b8f2bff393",
-                    "path": "<Mouse>/leftButton",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PrimaryFire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "c3b663b9-2a4e-46ee-963d-f8b51f019fee",
-                    "path": "<Gamepad>/rightTrigger",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "PrimaryFire",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "a8efab45-3318-4191-9a8a-9e0dafc0510a",
                     "path": "<Keyboard>/space",
                     "interactions": "",
@@ -142,6 +129,39 @@
                     "processors": "",
                     "groups": "",
                     "action": "Jump",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fa3d7e25-034c-4f47-b6ae-4702428bbfc9",
+                    "path": "<Mouse>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Rotation",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fd08f7b0-7941-454a-828e-159cb2f0559e",
+                    "path": "<Keyboard>/shift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "df359f0a-91c1-4cba-8407-4393927548ad",
+                    "path": "<Gamepad>/leftStickPress",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Sprint",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
