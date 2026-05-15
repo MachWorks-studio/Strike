@@ -7,6 +7,7 @@ public class FirstPersonController : MonoBehaviour
 {
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed = 3.0f;
+    [SerializeField] private float sprintMultiplier = 2.0f;
     [Header("Jump Parameters")]
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float gravity = 9.81f;
@@ -41,7 +42,7 @@ public class FirstPersonController : MonoBehaviour
 
     void HandleMovement()
     {
-        float speed = walkSpeed;
+        float speed = walkSpeed * (inputHandler.SprintValue > 0 ? sprintMultiplier : 1f);
         Vector3 inputDirection = new Vector3(inputHandler.MoveInput.x, 0f, inputHandler.MoveInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         worldDirection.Normalize();
@@ -77,5 +78,13 @@ public class FirstPersonController : MonoBehaviour
         verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+    }
+
+    void HandleShooting()
+    {
+        if (inputHandler.ShootTriggered)
+        {
+            Debug.Log("Shot");
+        }
     }
 }

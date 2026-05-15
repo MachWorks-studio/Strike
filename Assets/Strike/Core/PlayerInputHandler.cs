@@ -12,15 +12,18 @@ public class PlayerInputHandler : MonoBehaviour
     [SerializeField] private string move = "Move";
     [SerializeField] private string look = "Look";
     [SerializeField] private string jump = "Jump";
+    [SerializeField] private string sprint = "Sprint";
     [SerializeField] private string shoot = "Shoot";
 
     private InputAction moveAction;
     private InputAction lookAction;
     private InputAction jumpAction;
+    private InputAction sprintAction;
     private InputAction shootAction;
 
     public Vector2 MoveInput { get; private set; }
     public Vector2 LookInput { get; private set; }
+    public float SprintValue { get; private set; }
     public bool JumpTriggered { get; private set; }
     public bool ShootTriggered { get; private set; }
 
@@ -41,6 +44,7 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction = playerControls.FindActionMap(actionMapName).FindAction(move);
         lookAction = playerControls.FindActionMap(actionMapName).FindAction(look);
         jumpAction = playerControls.FindActionMap(actionMapName).FindAction(jump);
+        sprintAction = playerControls.FindActionMap(actionMapName).FindAction(sprint);
         shootAction = playerControls.FindActionMap(actionMapName).FindAction(shoot);
         RegisterInputActions();
     }
@@ -54,10 +58,13 @@ public class PlayerInputHandler : MonoBehaviour
         lookAction.canceled += context => LookInput = Vector2.zero;
 
         jumpAction.performed += context => JumpTriggered = true;
-        jumpAction.performed += context => JumpTriggered = false;
+        jumpAction.canceled+= context => JumpTriggered = false;
+
+        sprintAction.performed += context => SprintValue = context.ReadValue<float>();
+        sprintAction.canceled += context => SprintValue = 0f;
 
         shootAction.performed += context => ShootTriggered = true;
-        shootAction.performed += context => ShootTriggered = false;
+        shootAction.canceled += context => ShootTriggered = false;
     }
 
     private void OnEnable()
@@ -65,6 +72,7 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction.Enable();
         lookAction.Enable();
         jumpAction.Enable();
+        sprintAction.Enable();
         shootAction.Enable();
     }
 
@@ -73,6 +81,7 @@ public class PlayerInputHandler : MonoBehaviour
         moveAction.Disable();
         lookAction.Disable();
         jumpAction.Disable();
+        sprintAction.Disable();
         shootAction.Disable();
     }
 }
