@@ -1,7 +1,13 @@
 using UnityEngine;
 
-public class Gun : MonoBehaviour
+public class Gun : MonoBehaviour, IFirearm
 {
+    private AudioSource firingSound;
+
+    private void Awake()
+    {
+        firingSound = GetComponent<AudioSource>();
+    }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -12,5 +18,10 @@ public class Gun : MonoBehaviour
     void Update()
     {
         
+    }
+
+    public void PrimaryFire()
+    {
+        firingSound.Play();
     }
 }
