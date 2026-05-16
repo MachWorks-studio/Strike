@@ -5,6 +5,8 @@ using UnityEngine.TextCore.Text;
 
 public class FirstPersonController : MonoBehaviour
 {
+    [Header("Firearm")]
+    [SerializeField] private GameObject firearm;
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed = 3.0f;
     [SerializeField] private float sprintMultiplier = 2.0f;
@@ -25,19 +27,24 @@ public class FirstPersonController : MonoBehaviour
     {
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
-        inputHandler = PlayerInputHandler.Instance;
     }
 
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        inputHandler = PlayerInputHandler.Instance;
+
     }
     
     private void Update()
     {
         HandleMovement();
         HandleRotation();
+        if (inputHandler.JumpTriggered)
+        {
+            Debug.Log("Shot");
+        }
     }
 
     void HandleMovement()
@@ -80,7 +87,7 @@ public class FirstPersonController : MonoBehaviour
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
-    void HandleShooting()
+    void OnShoot()
     {
         if (inputHandler.ShootTriggered)
         {
