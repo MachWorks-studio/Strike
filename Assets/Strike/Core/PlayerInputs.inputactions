@@ -154,6 +154,17 @@
                 },
                 {
                     "name": "",
+                    "id": "991b45e4-b78c-488b-ad85-9ba718a2cc5c",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "fd08f7b0-7941-454a-828e-159cb2f0559e",
                     "path": "<Keyboard>/shift",
                     "interactions": "",

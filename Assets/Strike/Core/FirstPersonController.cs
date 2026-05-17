@@ -19,10 +19,10 @@ public class FirstPersonController : MonoBehaviour
 
     private CharacterController characterController;
     private Camera mainCamera;
-    private PlayerInputHandler inputHandler;
     private Vector3 currentMovement;
     private float verticalRotation;
-
+    private float sprintInput;
+    private Vector2 mouseLookInput;
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
@@ -33,65 +33,59 @@ public class FirstPersonController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-        inputHandler = PlayerInputHandler.Instance;
 
     }
     
     private void Update()
     {
-        HandleMovement();
-        HandleRotation();
-        if (inputHandler.JumpTriggered)
-        {
-            Debug.Log("Shot");
-        }
+        Look();
+        MoveCharacter(currentMovement);
     }
-
-    void HandleMovement()
+    void OnMove(InputValue value)
     {
-        float speed = walkSpeed * (inputHandler.SprintValue > 0 ? sprintMultiplier : 1f);
-        Vector3 inputDirection = new Vector3(inputHandler.MoveInput.x, 0f, inputHandler.MoveInput.y);
+        float speed = walkSpeed;
+        Vector2 moveInput = value.Get<Vector2>();
+        Vector3 inputDirection = new Vector3(moveInput.x, 0f, moveInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         worldDirection.Normalize();
 
         currentMovement.x = worldDirection.x * speed;
         currentMovement.z = worldDirection.z * speed;
-
-        HandleJumping();
-        characterController.Move(currentMovement * Time.deltaTime);
+    }
+    void MoveCharacter(Vector3 movementVector)
+    {
+        characterController.Move(movementVector * Time.deltaTime);
     }
 
-    void HandleJumping()
+    void OnLook(InputValue value)
     {
-        if (characterController.isGrounded)
-        {
-            currentMovement.y = -0.5f;
-
-            if (inputHandler.JumpTriggered)
-            {
-                currentMovement.y = jumpForce;
-            }
-        }
-        else
-        {
-            currentMovement.y -= gravity * Time.deltaTime;
-        }
+        mouseLookInput = value.Get<Vector2>();
     }
-    void HandleRotation()
+
+    void Look()
     {
-        float mouseXRotation = inputHandler.LookInput.x * mouseSensitivity;
+        float mouseXRotation = mouseLookInput.x * mouseSensitivity;
         transform.Rotate(0, mouseXRotation, 0);
 
-        verticalRotation -= inputHandler.LookInput.y * mouseSensitivity;
+        verticalRotation -= mouseLookInput.y * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
-    void OnShoot()
+    // SPRINT IS NOT IMPLEMENTED YET
+    /*
+    void OnSprint(InputValue value)
     {
-        if (inputHandler.ShootTriggered)
-        {
-            Debug.Log("Shot");
-        }
+        sprintInput = value.Get<float>();
     }
+    */
+
+    // JUMP IS NOT IMPLEMENTED YET
+    /*
+    void OnJump()
+    {
+        currentMovement.y = jumpForce;
+        Debug.Log("Jumped");
+    }
+    */
 }

@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Gun : MonoBehaviour, IFirearm
+public class Gun : MonoBehaviour
 {
     private AudioSource firingSound;
 
@@ -20,7 +20,7 @@ public class Gun : MonoBehaviour, IFirearm
         
     }
 
-    public void PrimaryFire()
+    public void OnShoot()
     {
         firingSound.Play();
     }
