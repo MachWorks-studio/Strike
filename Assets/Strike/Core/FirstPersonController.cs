@@ -1,3 +1,4 @@
+using Unity.Android.Gradle.Manifest;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -20,6 +21,9 @@ public class FirstPersonController : MonoBehaviour
     private CharacterController characterController;
     private Camera mainCamera;
     private Vector3 currentMovement;
+    private PlayerInput playerInput;
+    private Vector2 playerMoveInput;
+    private bool playerJumpInput;
     private float verticalRotation;
     private float sprintInput;
     private Vector2 mouseLookInput;
@@ -31,6 +35,7 @@ public class FirstPersonController : MonoBehaviour
 
     void Start()
     {
+        playerInput = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
 
@@ -38,25 +43,44 @@ public class FirstPersonController : MonoBehaviour
     
     private void Update()
     {
+        playerMoveInput = playerInput.actions["Move"].ReadValue<Vector2>();
+        playerJumpInput = playerInput.actions["Jump"].IsPressed();
         Look();
         MoveCharacter(currentMovement);
+        Gravity();
     }
     void OnMove(InputValue value)
     {
+        //Debug.Log("On Move happening");
+    }
+    void MoveCharacter(Vector3 movementVector)
+    {
         float speed = walkSpeed;
-        Vector2 moveInput = value.Get<Vector2>();
-        Vector3 inputDirection = new Vector3(moveInput.x, 0f, moveInput.y);
+        Vector3 inputDirection = new Vector3(playerMoveInput.x, 0f, playerMoveInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         worldDirection.Normalize();
 
         currentMovement.x = worldDirection.x * speed;
         currentMovement.z = worldDirection.z * speed;
-    }
-    void MoveCharacter(Vector3 movementVector)
-    {
         characterController.Move(movementVector * Time.deltaTime);
     }
 
+    void Gravity()
+    {
+        if (characterController.isGrounded)
+        {
+            currentMovement.y = -0.5f;
+
+            if (playerJumpInput == true)
+            {
+                currentMovement.y = jumpForce;
+            }
+        }
+        else
+        {
+            currentMovement.y -= gravity * Time.deltaTime;
+        }
+    }
     void OnLook(InputValue value)
     {
         mouseLookInput = value.Get<Vector2>();
