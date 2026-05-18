@@ -22,10 +22,11 @@ public class FirstPersonController : MonoBehaviour
     private Camera mainCamera;
     private Vector3 currentMovement;
     private PlayerInput playerInput;
+    // Input Values
     private Vector2 playerMoveInput;
     private bool playerJumpInput;
+    private bool playerSprintInput;
     private float verticalRotation;
-    private float sprintInput;
     private Vector2 mouseLookInput;
     private void Awake()
     {
@@ -45,6 +46,8 @@ public class FirstPersonController : MonoBehaviour
     {
         playerMoveInput = playerInput.actions["Move"].ReadValue<Vector2>();
         playerJumpInput = playerInput.actions["Jump"].IsPressed();
+        playerSprintInput = playerInput.actions["Sprint"].IsPressed();
+
         Look();
         MoveCharacter(currentMovement);
         Gravity();
@@ -55,7 +58,15 @@ public class FirstPersonController : MonoBehaviour
     }
     void MoveCharacter(Vector3 movementVector)
     {
-        float speed = walkSpeed;
+        float speed;
+        if (playerSprintInput == true)
+        {
+            speed = walkSpeed * sprintMultiplier;
+        }
+        else
+        {
+            speed = walkSpeed;
+        }
         Vector3 inputDirection = new Vector3(playerMoveInput.x, 0f, playerMoveInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         worldDirection.Normalize();
@@ -97,19 +108,8 @@ public class FirstPersonController : MonoBehaviour
     }
 
     // SPRINT IS NOT IMPLEMENTED YET
-    /*
     void OnSprint(InputValue value)
     {
-        sprintInput = value.Get<float>();
+        playerSprintInput = value.isPressed;
     }
-    */
-
-    // JUMP IS NOT IMPLEMENTED YET
-    /*
-    void OnJump()
-    {
-        currentMovement.y = jumpForce;
-        Debug.Log("Jumped");
-    }
-    */
 }
