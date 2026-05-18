@@ -3,6 +3,8 @@ using UnityEngine;
 public class Gun : MonoBehaviour
 {
     private AudioSource firingSound;
+    [Header("Gun Attributes")]
+    [SerializeField] private GameObject projectileOriginLocation;
 
     private void Awake()
     {
@@ -22,6 +24,32 @@ public class Gun : MonoBehaviour
 
     public void OnShoot()
     {
+        if  (Physics.Raycast(
+                projectileOriginLocation.transform.position,
+                projectileOriginLocation.transform.TransformDirection(Vector3.forward),
+                out RaycastHit hitInfo,
+                1000f
+                )
+            )
+        {
+            Debug.DrawRay(
+                projectileOriginLocation.transform.position,
+                projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
+                Color.green,
+                2f
+                );
+            Debug.Log("Hit Something");
+        }
+        else
+        {
+            Debug.DrawRay(
+                projectileOriginLocation.transform.position,
+                projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 10f,
+                Color.red,
+                2f
+                );
+            Debug.Log("Hit Nothing");
+        }
         firingSound.Play();
     }
 }
