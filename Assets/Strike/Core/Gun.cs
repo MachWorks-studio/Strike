@@ -1,3 +1,4 @@
+using UnityEditor;
 using UnityEngine;
 
 public class Gun : MonoBehaviour
@@ -5,6 +6,7 @@ public class Gun : MonoBehaviour
     private AudioSource firingSound;
     [Header("Gun Attributes")]
     [SerializeField] private GameObject projectileOriginLocation;
+    [SerializeField] private GameObject projectileImpactPrefab;
 
     private void Awake()
     {
@@ -39,6 +41,7 @@ public class Gun : MonoBehaviour
                 2f
                 );
             Debug.Log("Hit Something");
+            Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
         }
         else
         {
