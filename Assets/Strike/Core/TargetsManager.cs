@@ -48,17 +48,12 @@ public class TargetsManager : MonoBehaviour
         {
             AllTargetsHit();
         }
-        else
-        {
-            Debug.Log("Target Hit! Manager Knows.");
-        }
     }
 
     void AllTargetsHit()
     {
         GameManager.Instance.CompleteRound();
-        StartCoroutine(SpawnAfterDelay(1f));
-        Debug.Log("All Targets Hit, Respawning Targets");
+        StartCoroutine(SpawnAfterDelay(2f));
     }
     // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator SpawnAfterDelay(float delay)
