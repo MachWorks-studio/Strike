@@ -15,7 +15,7 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float gravity = 9.81f;
     [Header("Look Sensitivity")]
-    [SerializeField] private float mouseSensitivity = 0.2f;
+    [SerializeField] private float mouseSensitivity = 0.05f;
     [SerializeField] private float upDownRange = 80.0f;
 
     private CharacterController characterController;
