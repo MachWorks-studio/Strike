@@ -39,6 +39,15 @@ public class TargetsManager : MonoBehaviour
         targetsRemaining = activeTargets.Length;
     }
 
+    public void DespawnAllTargets()
+    {
+        foreach (Target activeTarget in activeTargets)
+        {
+            Destroy(activeTarget.gameObject);
+        }
+        targetsRemaining = activeTargets.Length;
+    }
+
     void HandleTargetHit()
     {
         targetsRemaining--;
@@ -50,7 +59,7 @@ public class TargetsManager : MonoBehaviour
 
     void AllTargetsHit()
     {
-        GameManager.Instance.CompleteRound();
+        GameManager.Instance.EndRound();
         StartCoroutine(SpawnAfterDelay(2f));
     }
     // ReSharper disable Unity.PerformanceAnalysis

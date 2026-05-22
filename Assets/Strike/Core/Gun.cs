@@ -9,11 +9,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject projectileOriginLocation;
     [SerializeField] private GameObject projectileImpactPrefab;
     [SerializeField] private GameObject muzzleFlash;
-    [SerializeField] private ParticleSystem muzzleFlashParticles;
+    private ParticleSystem muzzleFlashParticles;
+    private Animator gunAnimator;
 
     private void Awake()
     {
         firingSound = GetComponent<AudioSource>();
+        gunAnimator = GetComponentInChildren<Animator>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -30,6 +32,7 @@ public class Gun : MonoBehaviour
     public void OnShoot()
     {
         ESurfaceType targetSurfaceType = ESurfaceType.Default;
+        gunAnimator.Play("Shoot", 0, 0f);
         muzzleFlashParticles.Play();
         firingSound.Play();
         if  (Physics.Raycast

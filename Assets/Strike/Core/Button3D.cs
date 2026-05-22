@@ -3,9 +3,21 @@ using UnityEngine.EventSystems;
 
 public class Button3D : MonoBehaviour, IDamageable
 {
+    [SerializeField] private EButtonFunctions buttonFunction;
     public void TakeDamage(float damage)
     {
-        GameManager.Instance.StartRound();
+        switch (buttonFunction)
+        {
+            case EButtonFunctions.Default:
+                Debug.Log("Default, nothing implemented");
+                break;
+            case EButtonFunctions.StartRound:
+                GameManager.Instance.StartCircuit();
+                break;
+            case EButtonFunctions.EndRound:
+                GameManager.Instance.EndCircuit();
+                break;
+        }
     }
 
     public ESurfaceType GetSurfaceType()

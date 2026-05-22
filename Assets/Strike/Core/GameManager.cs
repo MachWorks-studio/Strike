@@ -42,6 +42,19 @@ public class GameManager : MonoBehaviour
             ($"Round {roundsElapsed}\n" +
              $"Time Elapsed: {FormatTime(currentRoundTime)}");
     }
+
+    public void StartCircuit()
+    {
+        previousRoundTimes = Array.Empty<float>();
+        StartRound();
+    }
+
+    public void EndCircuit()
+    {
+        EndRound();
+        roundsElapsed = 0;
+        TargetsManager.Instance.DespawnAllTargets();
+    }
     public void SetRoundState(ERounds state)
     {
         currentRoundState = state;
@@ -66,7 +79,7 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void CompleteRound()
+    public void EndRound()
     {
         roundIsRunning = false;
         SetRoundState(ERounds.Completed);
