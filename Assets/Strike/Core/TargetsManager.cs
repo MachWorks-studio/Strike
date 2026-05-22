@@ -8,8 +8,9 @@ public class TargetsManager : MonoBehaviour
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Transform[] spawnPoints;
     
-    private Target[] activeTargets;
+    [SerializeField] Target[] activeTargets;
     [SerializeField] int targetsRemaining;
+    private bool willSpawnNextRound = true;
 
     void Awake()
     {
@@ -19,7 +20,6 @@ public class TargetsManager : MonoBehaviour
             return;
         }
         Instance = this;
-        activeTargets = new Target[spawnPoints.Length];
     }
     
     void Start()
@@ -29,6 +29,7 @@ public class TargetsManager : MonoBehaviour
 
     public void SpawnAllTargets()
     {
+        activeTargets = new Target[spawnPoints.Length];
         int i = 0;
         foreach (Transform spawnPoint in spawnPoints)
         {
@@ -43,9 +44,14 @@ public class TargetsManager : MonoBehaviour
     {
         foreach (Target activeTarget in activeTargets)
         {
-            Destroy(activeTarget.gameObject);
+            if (activeTarget != null)
+            {
+                activeTarget.OnTargetHit -= HandleTargetHit;
+                Destroy(activeTarget.gameObject);
+            }
         }
-        targetsRemaining = activeTargets.Length;
+        activeTargets = null;
+        targetsRemaining = 0;
     }
 
     void HandleTargetHit()
@@ -59,13 +65,26 @@ public class TargetsManager : MonoBehaviour
 
     void AllTargetsHit()
     {
+        activeTargets = null;
         GameManager.Instance.EndRound();
-        StartCoroutine(SpawnAfterDelay(2f));
+        if (willSpawnNextRound)
+        {
+            StartCoroutine(SpawnAfterDelay(2f));
+        }
+        else
+        {
+            
+        }
     }
     // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator SpawnAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
         GameManager.Instance.NextRound();
+    }
+
+    public void SetContinueToNextRound(bool value)
+    {
+        willSpawnNextRound = value;
     }
 }
