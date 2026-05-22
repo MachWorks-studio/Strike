@@ -18,4 +18,14 @@ public class Target : MonoBehaviour, IDamageable
         OnTargetHit?.Invoke();
         Destroy(gameObject);
     }
+
+    public ESurfaceType GetSurfaceType()
+    {
+        return ESurfaceType.Target;
+    }
+
+    public void SetSurfaceType(ESurfaceType type)
+    {
+        type = ESurfaceType.Target;
+    }
 }

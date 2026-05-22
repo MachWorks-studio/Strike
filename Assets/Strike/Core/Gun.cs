@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -28,6 +29,7 @@ public class Gun : MonoBehaviour
 
     public void OnShoot()
     {
+        ESurfaceType targetSurfaceType = ESurfaceType.Default;
         muzzleFlashParticles.Play();
         firingSound.Play();
         if  (Physics.Raycast
@@ -42,9 +44,16 @@ public class Gun : MonoBehaviour
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
                 Color.green,
                 2f);
-            Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             IDamageable damageable = hitInfo.collider.GetComponentInParent<IDamageable>();
-            damageable?.TakeDamage(10f);
+            if (damageable != null)
+            {
+                damageable.TakeDamage(1f);
+                targetSurfaceType = damageable.GetSurfaceType();
+            }
+            
+            GameObject projectileImpact = Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            ProjectileImpact projectileImpactScript = projectileImpact.GetComponent<ProjectileImpact>();
+            projectileImpactScript.PlayImpactSound(targetSurfaceType);
         }
         else
         {
