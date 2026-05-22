@@ -5,6 +5,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
+    [SerializeField] private AudioClip roundStartAudioClip;
+    [SerializeField] private AudioClip roundEndAudioClip;
+    private AudioSource audioSourceGameManager;
+    
     public int roundsElapsed;
     [SerializeField] private ERounds currentRoundState;
     [SerializeField] private float currentRoundTime;
@@ -18,6 +22,11 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    void Start()
+    {
+        audioSourceGameManager = gameObject.GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -36,6 +45,10 @@ public class GameManager : MonoBehaviour
         SetRoundState(ERounds.Running);
         currentRoundTime = 0f;
         roundIsRunning = true;
+        if (roundsElapsed > 0)
+        {
+            audioSourceGameManager.PlayOneShot(roundStartAudioClip);
+        }
     }
 
     public void CompleteRound()
@@ -43,6 +56,7 @@ public class GameManager : MonoBehaviour
         roundIsRunning = false;
         SetRoundState(ERounds.Completed);
         SaveRoundTime();
+        audioSourceGameManager.PlayOneShot(roundEndAudioClip);
     }
     public void NextRound()
     {
