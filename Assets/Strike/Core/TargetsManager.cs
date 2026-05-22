@@ -3,6 +3,8 @@ using UnityEngine;
 
 public class TargetsManager : MonoBehaviour
 {
+    public static TargetsManager Instance { get; private set; }
+    
     [SerializeField] private AudioClip roundStartAudioClip;
     [SerializeField] private AudioClip roundEndAudioClip;
     [SerializeField] private GameObject targetPrefab;
@@ -11,8 +13,17 @@ public class TargetsManager : MonoBehaviour
     private AudioSource audioSourceTargetManager;
     private Target[] activeTargets;
     private int targetsRemaining;
-    private int roundsElapsed;
 
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+    }
+    
     void Start()
     {
         audioSourceTargetManager = gameObject.GetComponent<AudioSource>();
@@ -22,11 +33,12 @@ public class TargetsManager : MonoBehaviour
 
     void SpawnAllTargets()
     {
-        if (roundsElapsed > 0)
+        if (GameManager.Instance.roundsElapsed > 0)
         {
             audioSourceTargetManager.PlayOneShot(roundStartAudioClip);
         }
-        roundsElapsed++;
+        GameManager.Instance.NextRound();
+        GameManager.Instance.SetRoundState(ERounds.Running);
         
         int i = 0;
         foreach (Transform spawnPoint in spawnPoints)
@@ -53,6 +65,7 @@ public class TargetsManager : MonoBehaviour
 
     void AllTargetsHit()
     {
+        GameManager.Instance.CompleteRound();
         audioSourceTargetManager.PlayOneShot(roundEndAudioClip);
         StartCoroutine(SpawnAfterDelay(1f));
         Debug.Log("All Targets Hit, Respawning Targets");
