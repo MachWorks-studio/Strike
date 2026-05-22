@@ -9,7 +9,7 @@ public class ProjectileImpact : MonoBehaviour
         impactParticles = GetComponentInChildren<ParticleSystem>();
         impactParticles.Play();
         audioSource = GetComponent<AudioSource>();
-        //audioSource.Play();
+        audioSource.Play();
         Destroy(gameObject, 3f);
     }
 }

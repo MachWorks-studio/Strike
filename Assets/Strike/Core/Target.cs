@@ -1,16 +1,20 @@
 using UnityEngine;
 
-public class Target : MonoBehaviour
+public class Target : MonoBehaviour, IDamageable
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    private AudioSource impactAudioSource;
+
     void Start()
     {
-        
+        impactAudioSource = GetComponent<AudioSource>();
     }
-
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(float damage)
     {
-        
+        OnTargetHit();
+    }
+    void OnTargetHit()
+    {
+        impactAudioSource.Play();
+        Debug.Log("TargetHit");
     }
 }

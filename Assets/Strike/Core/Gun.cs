@@ -7,6 +7,8 @@ public class Gun : MonoBehaviour
     [Header("Gun Attributes")]
     [SerializeField] private GameObject projectileOriginLocation;
     [SerializeField] private GameObject projectileImpactPrefab;
+    [SerializeField] private GameObject muzzleFlash;
+    [SerializeField] private ParticleSystem muzzleFlashParticles;
 
     private void Awake()
     {
@@ -15,7 +17,7 @@ public class Gun : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        muzzleFlashParticles = muzzleFlash.GetComponent<ParticleSystem>();
     }
 
     // Update is called once per frame
@@ -26,22 +28,23 @@ public class Gun : MonoBehaviour
 
     public void OnShoot()
     {
-        if  (Physics.Raycast(
-                projectileOriginLocation.transform.position,
-                projectileOriginLocation.transform.TransformDirection(Vector3.forward),
-                out RaycastHit hitInfo,
-                1000f
-                )
+        muzzleFlashParticles.Play();
+        firingSound.Play();
+        if  (Physics.Raycast
+                (projectileOriginLocation.transform.position,
+                 projectileOriginLocation.transform.TransformDirection(Vector3.forward),
+                 out RaycastHit hitInfo,
+                 1000f)
             )
         {
-            Debug.DrawRay(
-                projectileOriginLocation.transform.position,
+            Debug.DrawRay
+                (projectileOriginLocation.transform.position,
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
                 Color.green,
-                2f
-                );
-            Debug.Log("Hit Something");
+                2f);
             Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
+            IDamageable damageable = hitInfo.collider.GetComponentInParent<IDamageable>();
+            damageable?.TakeDamage(10f);
         }
         else
         {
@@ -51,8 +54,6 @@ public class Gun : MonoBehaviour
                 Color.red,
                 2f
                 );
-            Debug.Log("Hit Nothing");
         }
-        firingSound.Play();
     }
 }
