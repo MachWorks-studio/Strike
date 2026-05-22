@@ -2,8 +2,9 @@ using UnityEngine;
 
 public class ProjectileImpact : MonoBehaviour
 {
-    [SerializeField] private AudioSource audioSource;
-    [SerializeField] private ParticleSystem impactParticles;
+    [SerializeField] private AudioClip impactSound;
+    private AudioSource audioSource;
+    private ParticleSystem impactParticles;
     void Start()
     {
         impactParticles = GetComponentInChildren<ParticleSystem>();

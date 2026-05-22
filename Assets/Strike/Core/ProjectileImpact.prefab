@@ -4941,8 +4941,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 570d24c809d4ffb4f9277f388bf0995f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileImpact
-  audioSource: {fileID: 0}
-  impactParticles: {fileID: 0}
+  impactSound: {fileID: 8300000, guid: bbd34dc8756b1ca48b3c4e7bb1e79c0d, type: 3}
 --- !u!82 &2285301104615348487
 AudioSource:
   m_ObjectHideFlags: 0

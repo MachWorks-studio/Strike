@@ -1,20 +1,21 @@
 using UnityEngine;
+using System;
 
 public class Target : MonoBehaviour, IDamageable
 {
-    private AudioSource impactAudioSource;
+    public event Action OnTargetHit;
 
     void Start()
     {
-        impactAudioSource = GetComponent<AudioSource>();
+        
     }
     public void TakeDamage(float damage)
     {
-        OnTargetHit();
+        TargetHit();
     }
-    void OnTargetHit()
+    void TargetHit()
     {
-        impactAudioSource.Play();
-        Debug.Log("TargetHit");
+        OnTargetHit?.Invoke();
+        Destroy(gameObject);
     }
 }
