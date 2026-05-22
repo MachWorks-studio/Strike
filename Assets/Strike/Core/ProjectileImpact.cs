@@ -4,6 +4,7 @@ public class ProjectileImpact : MonoBehaviour
 { 
     public AudioClip targetImpactSound;
     public AudioClip defaultImpactSound;
+    public AudioClip buttonImpactSound;
     private AudioSource audioSource;
     private ParticleSystem impactParticles;
 
@@ -26,6 +27,9 @@ public class ProjectileImpact : MonoBehaviour
                 break;
             case ESurfaceType.Target:
                 audioSource.clip = targetImpactSound;
+                break;
+            case ESurfaceType.Button:
+                audioSource.clip = buttonImpactSound;
                 break;
         }
         audioSource.Play();

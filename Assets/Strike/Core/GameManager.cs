@@ -49,12 +49,20 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
-        SetRoundState(ERounds.Running);
-        currentRoundTime = 0f;
-        roundIsRunning = true;
-        if (roundsElapsed > 0)
+        if (roundIsRunning == false)
         {
-            audioSourceGameManager.PlayOneShot(roundStartAudioClip);
+            if (roundsElapsed > 0)
+            {
+                audioSourceGameManager.PlayOneShot(roundStartAudioClip);
+            }
+            TargetsManager.Instance.SpawnAllTargets();
+            SetRoundState(ERounds.Running);
+            currentRoundTime = 0f;
+            roundIsRunning = true;
+        }
+        else
+        {
+            throw new Exception("Round is already running");
         }
     }
 

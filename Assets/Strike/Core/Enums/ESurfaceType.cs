@@ -3,5 +3,6 @@ using UnityEngine;
 public enum ESurfaceType
 {
     Default,
-    Target
+    Target,
+    Button
 }

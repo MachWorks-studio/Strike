@@ -9,7 +9,7 @@ public class TargetsManager : MonoBehaviour
     [SerializeField] private Transform[] spawnPoints;
     
     private Target[] activeTargets;
-    private int targetsRemaining;
+    [SerializeField] int targetsRemaining;
 
     void Awake()
     {
@@ -19,18 +19,16 @@ public class TargetsManager : MonoBehaviour
             return;
         }
         Instance = this;
+        activeTargets = new Target[spawnPoints.Length];
     }
     
     void Start()
     {
-        activeTargets = new Target[spawnPoints.Length];
-        SpawnAllTargets();
+        //SpawnAllTargets();
     }
 
-    void SpawnAllTargets()
+    public void SpawnAllTargets()
     {
-        GameManager.Instance.StartRound();
-        
         int i = 0;
         foreach (Transform spawnPoint in spawnPoints)
         {
@@ -59,7 +57,6 @@ public class TargetsManager : MonoBehaviour
     IEnumerator SpawnAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        SpawnAllTargets();
         GameManager.Instance.NextRound();
     }
 }

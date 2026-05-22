@@ -4943,6 +4943,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileImpact
   targetImpactSound: {fileID: 8300000, guid: bbd34dc8756b1ca48b3c4e7bb1e79c0d, type: 3}
   defaultImpactSound: {fileID: 8300000, guid: 2bf1e5ae159fa634e820eef0cc1d5692, type: 3}
+  buttonImpactSound: {fileID: 8300000, guid: 0648ad67a7de2954fb5dec7cc527e141, type: 3}
 --- !u!82 &2285301104615348487
 AudioSource:
   m_ObjectHideFlags: 0
