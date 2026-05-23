@@ -929,9 +929,9 @@ MonoBehaviour:
   roundStartAudioClip: {fileID: 8300000, guid: aab6a9ede7d1fa148acf8592d5dc5e77, type: 3}
   roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
   gameManagerText: {fileID: 1549729566}
-  infiniteRounds: 0
-  roundsInCircuit: 5
-  roundsElapsed: 1
+  infiniteRounds: 1
+  roundsInCircuit: 2
+  currentRound: 1
   currentRoundState: 0
   currentRoundTime: 0
   previousRoundTimes:
@@ -6661,6 +6661,7 @@ MonoBehaviour:
   - {fileID: 509565461}
   - {fileID: 914386220}
   - {fileID: 899382878}
+  activeTargets: []
   targetsRemaining: 0
 --- !u!4 &1472372480
 Transform:

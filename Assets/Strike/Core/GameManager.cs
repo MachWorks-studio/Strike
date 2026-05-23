@@ -47,16 +47,19 @@ public class GameManager : MonoBehaviour
 
     public void StartCircuit()
     {
+        currentRound = 1;
         previousRoundTimes = new float []{ 0f };
         StartRound();
-        
     }
 
     public void EndCircuit()
     {
-        EndRound();
-        currentRound = 1;
-        TargetsManager.Instance.DespawnAllTargets();
+        if (roundIsRunning)
+        {
+            EndRound();
+            currentRound = 1;
+            TargetsManager.Instance.DespawnAllTargets();
+        }
     }
     public void SetRoundState(ERounds state)
     {
@@ -75,7 +78,7 @@ public class GameManager : MonoBehaviour
             SetRoundState(ERounds.Running);
             currentRoundTime = 0f;
             roundIsRunning = true;
-            if (currentRound == roundsInCircuit)
+            if (currentRound == roundsInCircuit && infiniteRounds == false)
             {
                 TargetsManager.Instance.SetContinueToNextRound(false);
             }
@@ -83,10 +86,6 @@ public class GameManager : MonoBehaviour
             {
                 TargetsManager.Instance.SetContinueToNextRound(true);
             }
-        }
-        else
-        {
-            throw new Exception("Round is already running");
         }
     }
 
@@ -102,7 +101,7 @@ public class GameManager : MonoBehaviour
     }
     public void NextRound()
     {
-        if (currentRound < roundsInCircuit)
+        if (currentRound < roundsInCircuit || infiniteRounds)
         {
             currentRound++;
             StartRound();
