@@ -259,6 +259,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Gun
       objectReference: {fileID: 0}
+    - target: {fileID: 5902650542137314086, guid: c56b607afa23e2849a6ea0988913dd7e, type: 3}
+      propertyPath: VRShoot.m_Reference
+      value: 
+      objectReference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+    - target: {fileID: 5902650542137314086, guid: c56b607afa23e2849a6ea0988913dd7e, type: 3}
+      propertyPath: VRShoot.m_UseReference
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5902650542137314086, guid: c56b607afa23e2849a6ea0988913dd7e, type: 3}
+      propertyPath: VRShoot.m_Action.m_Name
+      value: VR Shoot
+      objectReference: {fileID: 0}
     - target: {fileID: 8742398521150130552, guid: c56b607afa23e2849a6ea0988913dd7e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.146

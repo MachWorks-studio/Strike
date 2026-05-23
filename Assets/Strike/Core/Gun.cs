@@ -1,6 +1,7 @@
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Gun : MonoBehaviour
 {
@@ -11,6 +12,11 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject muzzleFlash;
     private ParticleSystem muzzleFlashParticles;
     private Animator gunAnimator;
+
+    public InputActionProperty VRShoot;
+
+    void OnEnable() => VRShoot.action.performed += OnVRShootPerformed;
+    void OnDisable() => VRShoot.action.performed -= OnVRShootPerformed;
 
     private void Awake()
     {
@@ -26,24 +32,33 @@ public class Gun : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        bool button = VRShoot.action.IsPressed();
     }
 
+    void OnVRShootPerformed(InputAction.CallbackContext context)
+    {
+        Shoot();
+    }
     public void OnShoot()
+    {
+        Shoot();
+    }
+
+    private void Shoot()
     {
         ESurfaceType targetSurfaceType = ESurfaceType.Default;
         gunAnimator.Play("Shoot", 0, 0f);
         muzzleFlashParticles.Play();
         firingSound.Play();
         if  (Physics.Raycast
-                (projectileOriginLocation.transform.position,
+             (projectileOriginLocation.transform.position,
                  projectileOriginLocation.transform.TransformDirection(Vector3.forward),
                  out RaycastHit hitInfo,
                  1000f)
             )
         {
             Debug.DrawRay
-                (projectileOriginLocation.transform.position,
+            (projectileOriginLocation.transform.position,
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
                 Color.green,
                 2f);
@@ -65,7 +80,7 @@ public class Gun : MonoBehaviour
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 10f,
                 Color.red,
                 2f
-                );
+            );
         }
     }
 }

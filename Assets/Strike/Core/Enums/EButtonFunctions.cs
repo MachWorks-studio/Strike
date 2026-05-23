@@ -4,5 +4,6 @@ public enum EButtonFunctions
 {
     Default,
     StartRound,
-    EndRound
+    EndRound,
+    Quit
 }

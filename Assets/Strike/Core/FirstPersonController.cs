@@ -107,7 +107,6 @@ public class FirstPersonController : MonoBehaviour
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
     }
 
-    // SPRINT IS NOT IMPLEMENTED YET
     void OnSprint(InputValue value)
     {
         playerSprintInput = value.isPressed;

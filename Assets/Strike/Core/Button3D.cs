@@ -17,6 +17,9 @@ public class Button3D : MonoBehaviour, IDamageable
             case EButtonFunctions.EndRound:
                 GameManager.Instance.EndCircuit();
                 break;
+            case EButtonFunctions.Quit:
+                GameManager.Instance.QuitGame();
+                break;
         }
     }
 

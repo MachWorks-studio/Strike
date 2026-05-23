@@ -82,7 +82,18 @@ MonoBehaviour:
   projectileOriginLocation: {fileID: 339947164434191103}
   projectileImpactPrefab: {fileID: 8221790376176175582, guid: 24799e19ba06d3f4191f258b69a60fa9, type: 3}
   muzzleFlash: {fileID: 7787419503718942736}
-  muzzleFlashParticles: {fileID: 0}
+  VRShoot:
+    m_UseReference: 1
+    m_Action:
+      m_Name: VR Shoot
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: c3dd62d3-ebc4-4288-a3fb-afaa09578bc8
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
 --- !u!82 &2091362936825859923
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5134,6 +5145,14 @@ PrefabInstance:
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 1f8bed30854149a43ba58a0d10b7bd8c, type: 2}
+    - target: {fileID: -1327889525754395260, guid: eb37e2741eefc9f4991abaa2a905723c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f6629f8e96f070746a616abc7256b95a, type: 2}
+    - target: {fileID: 683673220185996783, guid: eb37e2741eefc9f4991abaa2a905723c, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: f6629f8e96f070746a616abc7256b95a, type: 2}
     - target: {fileID: 919132149155446097, guid: eb37e2741eefc9f4991abaa2a905723c, type: 3}
       propertyPath: m_Name
       value: Pistol
