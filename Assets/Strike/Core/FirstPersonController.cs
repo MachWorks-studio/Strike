@@ -8,6 +8,8 @@ public class FirstPersonController : MonoBehaviour
 {
     [Header("Firearm")]
     [SerializeField] private GameObject firearm;
+
+    [SerializeField] private Gun gun;
     [Header("Movement Speeds")]
     [SerializeField] private float walkSpeed = 3.0f;
     [SerializeField] private float sprintMultiplier = 2.0f;
@@ -39,7 +41,7 @@ public class FirstPersonController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
-
+        gun.SetEventCamera(mainCamera);
     }
     
     private void Update()

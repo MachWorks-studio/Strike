@@ -10,7 +10,7 @@ public class TargetsManager : MonoBehaviour
     
     [SerializeField] Target[] activeTargets;
     [SerializeField] int targetsRemaining;
-    private bool willSpawnNextRound = true;
+    public bool willSpawnNextRound = true;
 
     void Awake()
     {

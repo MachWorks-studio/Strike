@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     
     [SerializeField] private AudioClip roundStartAudioClip;
     [SerializeField] private AudioClip roundEndAudioClip;
+    [SerializeField] private AudioClip circuitStartAudioClip;
+    [SerializeField] private AudioClip circuitEndAudioClip;
     private AudioSource audioSourceGameManager;
     [SerializeField] private TMP_Text gameManagerText;
 
@@ -17,6 +19,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private ERounds currentRoundState;
     [SerializeField] private float currentRoundTime;
     [SerializeField] private float[] previousRoundTimes = { 0f };
+    
     private bool roundIsRunning;
     void Awake()
     {
@@ -56,6 +59,7 @@ public class GameManager : MonoBehaviour
     {
         if (roundIsRunning)
         {
+            TargetsManager.Instance.SetContinueToNextRound(false);
             EndRound();
             currentRound = 1;
             TargetsManager.Instance.DespawnAllTargets();
@@ -70,7 +74,11 @@ public class GameManager : MonoBehaviour
     {
         if (roundIsRunning == false)
         {
-            if (currentRound > 1)
+            if (currentRound == 1)
+            {
+                audioSourceGameManager.PlayOneShot(circuitStartAudioClip);
+            }
+            else if (currentRound > 1)
             {
                 audioSourceGameManager.PlayOneShot(roundStartAudioClip);
             }
@@ -96,7 +104,14 @@ public class GameManager : MonoBehaviour
             SaveRoundTime();
             roundIsRunning = false;
             SetRoundState(ERounds.Completed);
-            audioSourceGameManager.PlayOneShot(roundEndAudioClip);
+            if (TargetsManager.Instance.willSpawnNextRound == false)
+            {
+                audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
+            }
+            else
+            {
+                audioSourceGameManager.PlayOneShot(roundEndAudioClip);
+            }
         }
     }
     public void NextRound()

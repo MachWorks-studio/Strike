@@ -1,7 +1,10 @@
+using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Gun : MonoBehaviour
 {
@@ -12,6 +15,7 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject muzzleFlash;
     private ParticleSystem muzzleFlashParticles;
     private Animator gunAnimator;
+    private Camera eventCamera;
 
     public InputActionProperty VRShoot;
 
@@ -22,23 +26,21 @@ public class Gun : MonoBehaviour
     {
         firingSound = GetComponent<AudioSource>();
         gunAnimator = GetComponentInChildren<Animator>();
-    }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
         muzzleFlashParticles = muzzleFlash.GetComponent<ParticleSystem>();
     }
-
-    // Update is called once per frame
+    void Start()
+    {
+    }
     void Update()
     {
-        bool button = VRShoot.action.IsPressed();
+        
     }
-
+    //Shoot Input from VRPlayer
     void OnVRShootPerformed(InputAction.CallbackContext context)
     {
         Shoot();
     }
+    //Shoot Input from FlatPlayer
     public void OnShoot()
     {
         Shoot();
@@ -50,31 +52,32 @@ public class Gun : MonoBehaviour
         gunAnimator.Play("Shoot", 0, 0f);
         muzzleFlashParticles.Play();
         firingSound.Play();
-        if  (Physics.Raycast
-             (projectileOriginLocation.transform.position,
-                 projectileOriginLocation.transform.TransformDirection(Vector3.forward),
-                 out RaycastHit hitInfo,
-                 1000f)
-            )
+        Ray shootRay = new Ray(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward));
+        if  (Physics.Raycast(shootRay, out RaycastHit hitInfo, 1000f))
         {
+            // Raycast Success
             Debug.DrawRay
             (projectileOriginLocation.transform.position,
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
                 Color.green,
                 2f);
+            
             IDamageable damageable = hitInfo.collider.GetComponentInParent<IDamageable>();
+            
             if (damageable != null)
             {
                 damageable.TakeDamage(1f);
                 targetSurfaceType = damageable.GetSurfaceType();
             }
             
+            //Play relevant effects
             GameObject projectileImpact = Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             ProjectileImpact projectileImpactScript = projectileImpact.GetComponent<ProjectileImpact>();
             projectileImpactScript.PlayImpactSound(targetSurfaceType);
         }
         else
         {
+            //Raycast Failed
             Debug.DrawRay(
                 projectileOriginLocation.transform.position,
                 projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 10f,
@@ -82,5 +85,32 @@ public class Gun : MonoBehaviour
                 2f
             );
         }
+        ShootUIRaycast(shootRay);
     }
+
+    private void ShootUIRaycast(Ray shootRayUI)
+    {
+        if (eventCamera == null) return;
+        
+        Vector2 screenPosition = eventCamera.WorldToScreenPoint(shootRayUI.origin + shootRayUI.direction);
+
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
+        {
+            position = screenPosition,
+        };
+        
+        List<RaycastResult> results = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(pointerEventData, results);
+
+        foreach (RaycastResult result in results)
+        {
+            Button button = result.gameObject.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.Invoke();
+                return;
+            }
+        }
+    }
+    public void SetEventCamera(Camera cam) => eventCamera = cam;
 }
