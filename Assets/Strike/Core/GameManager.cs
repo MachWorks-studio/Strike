@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private AudioSource audioSourceGameManager;
     [SerializeField] private TMP_Text currentRoundTimeText;
 	[SerializeField] private TMP_Text allRoundTimesInCircuitText;
+    [SerializeField] private TMP_Text countDownText;
 
     public bool infiniteRounds = false;
     public int roundsInCircuit = 5;
@@ -57,6 +58,7 @@ public class GameManager : MonoBehaviour
         previousRoundTimes = new float []{ 0f };
         SetRoundState(ERounds.Paused);
         UpdateRoundTimesText();
+        countDownText.gameObject.SetActive(true);
     }
 
     IEnumerator StartCircuitCountdown()
@@ -64,10 +66,12 @@ public class GameManager : MonoBehaviour
         int counter = 3;
         while (counter > 0)
         {
+            countDownText.text = counter.ToString();
             audioSourceGameManager.PlayOneShot(countDownAudioClip);
             yield return new WaitForSeconds(1f);
             counter--;
         }
+        countDownText.gameObject.SetActive(false);
         StartRound();
     }
 
@@ -88,6 +92,7 @@ public class GameManager : MonoBehaviour
             SetRoundState(ERounds.Completed);
             audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
             UpdateCurrentCircuitTimesText();
+            countDownText.gameObject.SetActive(false);
         }
     }
     public void SetRoundState(ERounds state)
