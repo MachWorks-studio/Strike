@@ -412,8 +412,8 @@ MonoBehaviour:
   roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
   circuitStartAudioClip: {fileID: 8300000, guid: d4f317c5812c6d34c9dd116f70c78fa1, type: 3}
   circuitEndAudioClip: {fileID: 8300000, guid: b0b4e17e9dffc0d4398d8b7f43fead92, type: 3}
-  roundTimesText: {fileID: 1549729566}
-  circuitTimesText: {fileID: 348869186}
+  currentRoundTimeText: {fileID: 1549729566}
+  allRoundTimesInCircuitText: {fileID: 348869186}
   infiniteRounds: 0
   roundsInCircuit: 3
   currentRound: 1
@@ -530,7 +530,7 @@ GameObject:
   - component: {fileID: 348869187}
   - component: {fileID: 348869186}
   m_Layer: 0
-  m_Name: CircuitTimesText
+  m_Name: AllRoundTimesInCircuitText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -544,7 +544,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 348869184}
   m_LocalRotation: {x: -0, y: 0.38268274, z: -0, w: 0.9238798}
-  m_LocalPosition: {x: 0, y: 0, z: 2.9820588}
+  m_LocalPosition: {x: 0, y: 0, z: 2.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -552,8 +552,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 45, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.0612552, y: 2}
-  m_SizeDelta: {x: 1, y: 2}
+  m_AnchoredPosition: {x: 2.5, y: 2.5}
+  m_SizeDelta: {x: 2, y: 2}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &348869186
 MonoBehaviour:
@@ -575,7 +575,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Circuit Times
+  m_text: Round times
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c3cbb711edadfdc4187f49026ef07020, type: 2}
   m_sharedMaterial: {fileID: 250593482386334547, guid: c3cbb711edadfdc4187f49026ef07020, type: 2}
@@ -3274,7 +3274,7 @@ GameObject:
   - component: {fileID: 1549729567}
   - component: {fileID: 1549729566}
   m_Layer: 0
-  m_Name: RoundTimesText
+  m_Name: CurrentRoundTimeText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
