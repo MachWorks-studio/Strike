@@ -412,12 +412,13 @@ MonoBehaviour:
   roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
   circuitStartAudioClip: {fileID: 8300000, guid: d4f317c5812c6d34c9dd116f70c78fa1, type: 3}
   circuitEndAudioClip: {fileID: 8300000, guid: b0b4e17e9dffc0d4398d8b7f43fead92, type: 3}
+  countDownAudioClip: {fileID: 8300000, guid: f262b93e2f8b72e45a30a7653a2451cd, type: 3}
   currentRoundTimeText: {fileID: 1549729566}
   allRoundTimesInCircuitText: {fileID: 348869186}
   infiniteRounds: 0
   roundsInCircuit: 3
   currentRound: 1
-  currentRoundState: 0
+  currentRoundState: 2
   currentRoundTime: 0
   previousRoundTimes:
   - 0

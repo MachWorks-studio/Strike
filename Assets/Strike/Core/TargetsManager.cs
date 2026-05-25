@@ -11,6 +11,8 @@ public class TargetsManager : MonoBehaviour
     [SerializeField] Target[] activeTargets;
     public int targetsRemaining;
     public bool willSpawnNextRound = true;
+    
+    private Coroutine _waitForNextRoundCoroutine;
 
     void Awake()
     {
@@ -42,12 +44,15 @@ public class TargetsManager : MonoBehaviour
 
     public void DespawnAllTargets()
     {
-        foreach (Target activeTarget in activeTargets)
+        if (activeTargets != null)
         {
-            if (activeTarget != null)
+            foreach (Target activeTarget in activeTargets)
             {
-                activeTarget.OnTargetHit -= HandleTargetHit;
-                Destroy(activeTarget.gameObject);
+                if (activeTarget != null)
+                {
+                    activeTarget.OnTargetHit -= HandleTargetHit;
+                    Destroy(activeTarget.gameObject);
+                }
             }
         }
         activeTargets = null;
@@ -69,7 +74,7 @@ public class TargetsManager : MonoBehaviour
         GameManager.Instance.EndRound();
         if (willSpawnNextRound)
         {
-            StartCoroutine(SpawnAfterDelay(2f));
+            _waitForNextRoundCoroutine = StartCoroutine(SpawnAfterDelay(2f));
         }
         else
         {
@@ -86,5 +91,14 @@ public class TargetsManager : MonoBehaviour
     public void SetContinueToNextRound(bool value)
     {
         willSpawnNextRound = value;
+    }
+
+    public void StopWaitingForNextRound()
+    {
+        if (_waitForNextRoundCoroutine != null)
+        {
+            StopCoroutine(_waitForNextRoundCoroutine);
+            _waitForNextRoundCoroutine = null;
+        }
     }
 }
