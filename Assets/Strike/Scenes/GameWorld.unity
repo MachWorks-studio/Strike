@@ -3196,6 +3196,7 @@ MonoBehaviour:
   - {fileID: 914386220}
   - {fileID: 899382878}
   - {fileID: 1702053576}
+  targetCount: 4
   activeTargets: []
   targetsRemaining: 0
   willSpawnNextRound: 1

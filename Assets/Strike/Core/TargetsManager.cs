@@ -1,4 +1,5 @@
 using System.Collections;
+using System.Linq;
 using UnityEngine;
 
 public class TargetsManager : MonoBehaviour
@@ -7,6 +8,7 @@ public class TargetsManager : MonoBehaviour
     
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Transform[] spawnPoints;
+    [SerializeField] private int targetCount = 5;
     
     [SerializeField] Target[] activeTargets;
     public int targetsRemaining;
@@ -14,6 +16,11 @@ public class TargetsManager : MonoBehaviour
     
     private Coroutine _waitForNextRoundCoroutine;
 
+    //For Clamping Inspector values
+    private void OnValidate()
+    {
+        targetCount = Mathf.Clamp(targetCount, 1, spawnPoints.Length);
+    }
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,13 +38,16 @@ public class TargetsManager : MonoBehaviour
 
     public void SpawnAllTargets()
     {
-        activeTargets = new Target[spawnPoints.Length];
-        int i = 0;
-        foreach (Transform spawnPoint in spawnPoints)
+        int spawnCount = Mathf.Clamp(targetCount, 0, spawnPoints.Length);
+        
+        Transform[] shuffledTargets = spawnPoints.OrderBy(_=> Random.value).ToArray();
+        
+        activeTargets = new Target[spawnCount];
+
+        for (int i = 0; i < spawnCount; i++)
         {
-            activeTargets[i] = Instantiate(targetPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<Target>();
+            activeTargets[i] = Instantiate(targetPrefab, shuffledTargets[i].position, shuffledTargets[i].rotation).GetComponent<Target>();
             activeTargets[i].OnTargetHit += HandleTargetHit;
-            i++;
         }
         targetsRemaining = activeTargets.Length;
     }
