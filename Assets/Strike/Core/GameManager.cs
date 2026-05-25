@@ -11,7 +11,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip circuitStartAudioClip;
     [SerializeField] private AudioClip circuitEndAudioClip;
     private AudioSource audioSourceGameManager;
-    [SerializeField] private TMP_Text gameManagerText;
+    [SerializeField] private TMP_Text roundTimesText;
+	[SerializeField] private TMP_Text circuitTimesText;
 
     public bool infiniteRounds = false;
     public int roundsInCircuit = 5;
@@ -43,7 +44,7 @@ public class GameManager : MonoBehaviour
         if (!roundIsRunning) return;
         currentRoundTime += Time.deltaTime;
         
-        UpdateGameManagerText
+        UpdateRoundTimesText
             ($"Round {currentRound}\n" +
              $"Time Elapsed: {FormatTime(currentRoundTime)}");
     }
@@ -94,6 +95,7 @@ public class GameManager : MonoBehaviour
             {
                 TargetsManager.Instance.SetContinueToNextRound(true);
             }
+            UpdateCircuitTimesText();
         }
     }
 
@@ -112,6 +114,7 @@ public class GameManager : MonoBehaviour
             {
                 audioSourceGameManager.PlayOneShot(roundEndAudioClip);
             }
+            UpdateCircuitTimesText();
         }
     }
     public void NextRound()
@@ -136,9 +139,28 @@ public class GameManager : MonoBehaviour
         previousRoundTimes = newTimes;
     }
 
-    private void UpdateGameManagerText(string text)
+    private void UpdateRoundTimesText(string text)
     {
-        gameManagerText.text = text;
+        roundTimesText.text = text;
+    }
+
+    private void UpdateCircuitTimesText()
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.AppendLine("Circuit Times\n");
+        float totalTime = 0f;
+
+        for (int i = 1; i < previousRoundTimes.Length; i++)
+        {
+            if (previousRoundTimes[i] == 0) break;
+            sb.AppendLine($"Round {i}: {FormatTime(previousRoundTimes[i])}");
+            totalTime += previousRoundTimes[i];
+        }
+        if (TargetsManager.Instance.willSpawnNextRound == false)
+        {
+            sb.AppendLine($"\nTotal: {FormatTime(totalTime)}");
+        }
+        circuitTimesText.text = sb.ToString();
     }
 
     string FormatTime(float time)
