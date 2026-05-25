@@ -26,6 +26,12 @@ public class GameManager : MonoBehaviour
     
     private bool roundIsRunning;
     private Coroutine _countDownCoroutine;
+    
+    public static event System.Action OnStartCircuit;
+    public static event System.Action OnEndCircuit;
+    public static event System.Action OnStartRound;
+    public static event System.Action OnEndRound;
+    public static event System.Action OnNextRound;
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -59,6 +65,7 @@ public class GameManager : MonoBehaviour
         SetRoundState(ERounds.Paused);
         UpdateRoundTimesText();
         countDownText.gameObject.SetActive(true);
+        OnStartCircuit?.Invoke();
     }
 
     IEnumerator StartCircuitCountdown()
@@ -94,6 +101,7 @@ public class GameManager : MonoBehaviour
             UpdateCurrentCircuitTimesText();
             countDownText.gameObject.SetActive(false);
         }
+        OnEndCircuit?.Invoke();
     }
     public void SetRoundState(ERounds state)
     {
@@ -126,6 +134,7 @@ public class GameManager : MonoBehaviour
             }
             UpdateCurrentCircuitTimesText();
         }
+        OnStartRound?.Invoke();
     }
 
     public void EndRound()
@@ -139,6 +148,7 @@ public class GameManager : MonoBehaviour
             {
                 SetRoundState(ERounds.Completed);
                 audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
+                OnEndCircuit?.Invoke();
             }
             else
             {
@@ -146,6 +156,7 @@ public class GameManager : MonoBehaviour
                 audioSourceGameManager.PlayOneShot(roundEndAudioClip);
             }
         }
+        OnEndRound?.Invoke();
     }
     public void NextRound()
     {
@@ -158,6 +169,7 @@ public class GameManager : MonoBehaviour
         {
             EndRound();
         }
+        OnNextRound?.Invoke();
     }
 
     private void SaveRoundTime()

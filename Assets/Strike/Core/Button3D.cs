@@ -23,6 +23,12 @@ public class Button3D : MonoBehaviour, IDamageable
         }
     }
 
+    private void OnEnable()
+    {
+        GameManager.OnStartCircuit += HideButton;
+        GameManager.OnEndCircuit += ShowButton;
+    }
+
     public ESurfaceType GetSurfaceType()
     {
         return ESurfaceType.Button;
@@ -31,5 +37,16 @@ public class Button3D : MonoBehaviour, IDamageable
     public void SetSurfaceType(ESurfaceType type)
     {
         throw new System.NotImplementedException();
+    }
+
+    private void HideButton()
+    {
+        if (buttonFunction == EButtonFunctions.StartRound)
+            gameObject.SetActive(false);
+    }
+
+    private void ShowButton()
+    {
+        gameObject.SetActive(true);
     }
 }
