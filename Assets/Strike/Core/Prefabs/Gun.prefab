@@ -28,7 +28,8 @@ Transform:
   m_LocalPosition: {x: 0, y: 0.127, z: 0.21}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 7929929202463136376}
   m_Father: {fileID: 8742398521150130552}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &3815921167134010905
@@ -41,6 +42,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8742398521150130552}
   - component: {fileID: 5902650542137314086}
+  - component: {fileID: 6906702333949596230}
   - component: {fileID: 2091362936825859923}
   m_Layer: 0
   m_Name: Gun
@@ -64,7 +66,6 @@ Transform:
   m_Children:
   - {fileID: 2302295923766394238}
   - {fileID: 199030308505231561}
-  - {fileID: 7929929202463136376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5902650542137314086
@@ -94,6 +95,24 @@ MonoBehaviour:
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  hapticAmplitude: 0.1
+  hapticDuration: 0.02
+  bulletTracerSpawner: {fileID: 6906702333949596230}
+--- !u!114 &6906702333949596230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3815921167134010905}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbcdaa9315f93044ba4d5ab1092f65d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: '::'
+  bulletTracerPrefab: {fileID: 6290571308264719878, guid: ce014de41115d5446a0a4080cab9a45a, type: 3}
+  bulletTracerSpawnPoint: {fileID: 199030308505231561}
+  bulletSpeed: 300
 --- !u!82 &2091362936825859923
 AudioSource:
   m_ObjectHideFlags: 0
@@ -218,11 +237,11 @@ Transform:
   m_GameObject: {fileID: 7787419503718942736}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.127, z: 0.20999998}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 8742398521150130552}
+  m_Father: {fileID: 199030308505231561}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!198 &3018612581102470210
 ParticleSystem:

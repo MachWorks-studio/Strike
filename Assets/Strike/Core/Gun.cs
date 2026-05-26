@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -19,6 +20,8 @@ public class Gun : MonoBehaviour
     public InputActionProperty VRShoot;
     public float hapticAmplitude = 0.1f;
     public float hapticDuration = 0.02f;
+    
+    [SerializeField] private BulletTracerSpawner bulletTracerSpawner;
 
     void OnEnable() => VRShoot.action.performed += OnVRShootPerformed;
     void OnDisable() => VRShoot.action.performed -= OnVRShootPerformed;
@@ -80,10 +83,13 @@ public class Gun : MonoBehaviour
                 targetSurfaceType = damageable.GetSurfaceType();
             }
             
-            //Play projectile impact effects
+            // Play projectile impact effects
             GameObject projectileImpact = Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             ProjectileImpact projectileImpactScript = projectileImpact.GetComponent<ProjectileImpact>();
             projectileImpactScript.PlayImpactSound(targetSurfaceType);
+            
+            // Spawn bullet tracer
+            bulletTracerSpawner.SpawnBulletTracer(projectileOriginLocation.transform.position, hitInfo.point);
         }
         else
         {
@@ -94,6 +100,7 @@ public class Gun : MonoBehaviour
                 Color.red,
                 2f
             );
+            // Spawn bullet tracer going to empty space
         }
         ShootUIRaycast(shootRay);
     }
@@ -122,5 +129,6 @@ public class Gun : MonoBehaviour
             }
         }
     }
+
     public void SetEventCamera(Camera cam) => eventCamera = cam;
 }
