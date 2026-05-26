@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,6 +17,8 @@ public class Gun : MonoBehaviour
     private Camera eventCamera;
 
     public InputActionProperty VRShoot;
+    public float hapticAmplitude = 0.1f;
+    public float hapticDuration = 0.02f;
 
     void OnEnable() => VRShoot.action.performed += OnVRShootPerformed;
     void OnDisable() => VRShoot.action.performed -= OnVRShootPerformed;
@@ -35,7 +36,6 @@ public class Gun : MonoBehaviour
     {
         
     }
-    //Shoot Input from VRPlayer
     void OnVRShootPerformed(InputAction.CallbackContext context)
     {
         Shoot();
@@ -48,10 +48,20 @@ public class Gun : MonoBehaviour
 
     private void Shoot()
     {
+        // Haptic feedback for right VR controller on shoot
+        var vrController = VRShoot.action.activeControl;
+        if (vrController?.device is UnityEngine.InputSystem.XR.XRControllerWithRumble rumbleController)
+        {
+            rumbleController.SendImpulse(hapticAmplitude, hapticDuration);
+        }
+        
+        // Gun shoot feedback
         ESurfaceType targetSurfaceType = ESurfaceType.Default;
         gunAnimator.Play("Shoot", 0, 0f);
         muzzleFlashParticles.Play();
         firingSound.Play();
+        
+        // Shoot Physics Raycast
         Ray shootRay = new Ray(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward));
         if  (Physics.Raycast(shootRay, out RaycastHit hitInfo, 1000f))
         {
@@ -70,7 +80,7 @@ public class Gun : MonoBehaviour
                 targetSurfaceType = damageable.GetSurfaceType();
             }
             
-            //Play relevant effects
+            //Play projectile impact effects
             GameObject projectileImpact = Instantiate(projectileImpactPrefab, hitInfo.point, Quaternion.LookRotation(hitInfo.normal));
             ProjectileImpact projectileImpactScript = projectileImpact.GetComponent<ProjectileImpact>();
             projectileImpactScript.PlayImpactSound(targetSurfaceType);
