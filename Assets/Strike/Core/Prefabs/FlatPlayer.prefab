@@ -80,6 +80,11 @@ MonoBehaviour:
   gravity: 9.81
   mouseSensitivity: 0.05
   upDownRange: 80
+  minCrouchHeight: -1
+  maxCrouchHeight: 0
+  scrollStep: 0.1
+  heightLerpSpeed: 10
+  mainCameraTransform: {fileID: 8031806744100992786}
 --- !u!114 &3587956103675154880
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -19,6 +19,14 @@ public class FirstPersonController : MonoBehaviour
     [Header("Look Sensitivity")]
     [SerializeField] private float mouseSensitivity = 0.05f;
     [SerializeField] private float upDownRange = 80.0f;
+    [Header("Crouch Parameters")]
+    private float minCrouchHeight = -0.8f;
+    private float maxCrouchHeight;
+    [SerializeField] private float scrollStep = 0.1f;
+    [SerializeField] private float heightLerpSpeed = 10f;
+    [SerializeField] private Transform mainCameraTransform;
+    private float targetHeight = 0f;
+    private float currentHeight = 0f;
 
     private CharacterController characterController;
     private Camera mainCamera;
@@ -53,6 +61,8 @@ public class FirstPersonController : MonoBehaviour
         Look();
         MoveCharacter(currentMovement);
         Gravity();
+        ReadScrollInput();
+        SmoothHeight();
     }
     void OnMove(InputValue value)
     {
@@ -112,5 +122,24 @@ public class FirstPersonController : MonoBehaviour
     void OnSprint(InputValue value)
     {
         playerSprintInput = value.isPressed;
+    }
+
+    void ReadScrollInput()
+    {
+        float scroll = playerInput.actions["CrouchScroll"].ReadValue<float>();
+        if (scroll == 0) return;
+        targetHeight += scroll > 0 ? scrollStep : -scrollStep;
+        targetHeight = Mathf.Clamp(targetHeight, minCrouchHeight, maxCrouchHeight);
+    }
+
+    void SmoothHeight()
+    {
+        currentHeight = Mathf.Lerp(currentHeight, targetHeight, Time.deltaTime * heightLerpSpeed);
+        ApplyHeight(currentHeight);
+    }
+    void ApplyHeight(float height)
+    {
+        Debug.Log(height);
+        mainCameraTransform.localPosition = new Vector3(mainCameraTransform.localPosition.x, height, mainCameraTransform.localPosition.z);
     }
 }

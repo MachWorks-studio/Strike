@@ -226,7 +226,7 @@ public class GameManager : MonoBehaviour
         int seconds = (int)(time % 60);
         int centiseconds = (int)(time * 100 % 100);
         
-        return $"{hours}:{minutes}:{seconds}:{centiseconds}";
+        return $"{hours:D2}:{minutes:D2}:{seconds:D2}:{centiseconds:D2}";
     }
 
     public void QuitGame()
