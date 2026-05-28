@@ -11,8 +11,9 @@ public class FirstPersonController : MonoBehaviour
 
     [SerializeField] private Gun gun;
     [Header("Movement Speeds")]
-    [SerializeField] private float walkSpeed = 3.0f;
+    [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float sprintMultiplier = 2.0f;
+    [SerializeField] private float walkSpeedMultiplier = 0.2f;
     [Header("Jump Parameters")]
     [SerializeField] private float jumpForce = 5.0f;
     [SerializeField] private float gravity = 9.81f;
@@ -20,13 +21,13 @@ public class FirstPersonController : MonoBehaviour
     [SerializeField] private float mouseSensitivity = 0.05f;
     [SerializeField] private float upDownRange = 80.0f;
     [Header("Crouch Parameters")]
-    private float minCrouchHeight = -0.8f;
-    private float maxCrouchHeight;
+    private float minCrouchHeight = -0.9f;
+    private float maxCrouchHeight = 0.5f;
     [SerializeField] private float scrollStep = 0.1f;
     [SerializeField] private float heightLerpSpeed = 10f;
     [SerializeField] private Transform mainCameraTransform;
-    private float targetHeight = 0f;
-    private float currentHeight = 0f;
+    private float targetHeight;
+    private float currentHeight;
 
     private CharacterController characterController;
     private Camera mainCamera;
@@ -38,10 +39,14 @@ public class FirstPersonController : MonoBehaviour
     private bool playerSprintInput;
     private float verticalRotation;
     private Vector2 mouseLookInput;
+    private bool playerWalkInput;
+
     private void Awake()
     {
         characterController = GetComponent<CharacterController>();
         mainCamera = Camera.main;
+        targetHeight = mainCameraTransform.localPosition.y;
+        currentHeight = mainCameraTransform.localPosition.y;
     }
 
     void Start()
@@ -57,6 +62,7 @@ public class FirstPersonController : MonoBehaviour
         playerMoveInput = playerInput.actions["Move"].ReadValue<Vector2>();
         playerJumpInput = playerInput.actions["Jump"].IsPressed();
         playerSprintInput = playerInput.actions["Sprint"].IsPressed();
+        playerWalkInput = playerInput.actions["Walk"].IsPressed();
 
         Look();
         MoveCharacter(currentMovement);
@@ -73,12 +79,20 @@ public class FirstPersonController : MonoBehaviour
         float speed;
         if (playerSprintInput == true)
         {
-            speed = walkSpeed * sprintMultiplier;
+            speed = moveSpeed * sprintMultiplier;
         }
         else
         {
-            speed = walkSpeed;
+            if (playerWalkInput == true)
+            {
+                speed = moveSpeed * walkSpeedMultiplier;
+            }
+            else
+            {
+                speed = moveSpeed;
+            }
         }
+
         Vector3 inputDirection = new Vector3(playerMoveInput.x, 0f, playerMoveInput.y);
         Vector3 worldDirection = transform.TransformDirection(inputDirection);
         worldDirection.Normalize();
@@ -124,6 +138,11 @@ public class FirstPersonController : MonoBehaviour
         playerSprintInput = value.isPressed;
     }
 
+    void OnWalk(InputValue value)
+    {
+        playerWalkInput = value.isPressed;
+    }
+
     void ReadScrollInput()
     {
         float scroll = playerInput.actions["CrouchScroll"].ReadValue<float>();
@@ -139,7 +158,6 @@ public class FirstPersonController : MonoBehaviour
     }
     void ApplyHeight(float height)
     {
-        Debug.Log(height);
         mainCameraTransform.localPosition = new Vector3(mainCameraTransform.localPosition.x, height, mainCameraTransform.localPosition.z);
     }
 }
