@@ -1,8 +1,5 @@
-using Unity.Android.Gradle.Manifest;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 
 public class FirstPersonController : MonoBehaviour
 {

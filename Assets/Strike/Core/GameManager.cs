@@ -59,13 +59,16 @@ public class GameManager : MonoBehaviour
 
     public void StartCircuit()
     {
-        _countDownCoroutine = StartCoroutine(StartCircuitCountdown());
-        currentRound = 1;
-        previousRoundTimes = new float []{ 0f };
-        SetRoundState(ERounds.Paused);
-        UpdateRoundTimesText();
-        countDownText.gameObject.SetActive(true);
-        OnStartCircuit?.Invoke();
+        if (_countDownCoroutine == null)
+        {
+            _countDownCoroutine = StartCoroutine(StartCircuitCountdown());
+            currentRound = 1;
+            previousRoundTimes = new float []{ 0f };
+            SetRoundState(ERounds.Paused);
+            UpdateRoundTimesText();
+            countDownText.gameObject.SetActive(true);
+            OnStartCircuit?.Invoke();
+        }
     }
 
     IEnumerator StartCircuitCountdown()
