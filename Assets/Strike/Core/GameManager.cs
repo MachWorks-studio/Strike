@@ -152,6 +152,8 @@ public class GameManager : MonoBehaviour
                 SetRoundState(ERounds.Completed);
                 audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
                 OnEndCircuit?.Invoke();
+                StopCoroutine(_countDownCoroutine);
+                _countDownCoroutine = null;
             }
             else
             {
