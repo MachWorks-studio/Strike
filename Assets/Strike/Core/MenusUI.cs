@@ -2,18 +2,55 @@ using UnityEngine;
 
 public class MenusUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField] private GameObject mainMenu;
+    [SerializeField] private GameObject stageSelectMenu;
+    [SerializeField] private GameObject circuitMenu;
+    [SerializeField] private GameObject currentMenu;
+    [SerializeField] private GameObject parentMenu;
+
+    void Awake()
     {
-        
+        currentMenu = mainMenu;
+        ToggleMainMenuVisibility(true);
+        ToggleEnterStageSelectMenu(false);
+    }
+    public void ToggleMainMenuVisibility(bool visible)
+    {
+        mainMenu.SetActive(visible);
     }
 
-    // Update is called once per frame
-    void Update()
+    public void ToggleEnterStageSelectMenu(bool visible)
     {
-        
+        stageSelectMenu.SetActive(visible);
     }
 
+    public void ToggleCurrentMenuVisibility(bool visible)
+    {
+        currentMenu.SetActive(visible);
+    }
+    public void GoBackMenu()
+    {
+        Debug.Log("GoBackMenu");
+        ToggleCurrentMenuVisibility(false);
+        currentMenu = parentMenu;
+        if (currentMenu = mainMenu)
+        {
+            ToggleMainMenuVisibility(true);
+            parentMenu = null;
+        }
+        ToggleCurrentMenuVisibility(true);
+    }
+    public void EnterStageSelectMenu()
+    {
+        Debug.Log("Enter Stage Select Menu");
+        ToggleCurrentMenuVisibility(false);
+        currentMenu = stageSelectMenu;
+        parentMenu = mainMenu;
+        ToggleEnterStageSelectMenu(true);
+    }
+    // Stage Menu
+    
+    // Circuit Menu
     public void StartCircuit()
     {
         //Debug.Log("StartCircuit");
@@ -30,5 +67,11 @@ public class MenusUI : MonoBehaviour
     {
         Debug.Log("QuitGame");
         GameManager.Instance.QuitGame();
+    }
+
+    public void SelectStage(int stage)
+    {
+        int targetStage = stage;
+        Debug.Log($"{targetStage}");
     }
 }
