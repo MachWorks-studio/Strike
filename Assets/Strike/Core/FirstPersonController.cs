@@ -30,6 +30,7 @@ public class FirstPersonController : MonoBehaviour
     private Camera mainCamera;
     private Vector3 currentMovement;
     private PlayerInput playerInput;
+    private Vector3 defaultFirearmPosition;
     // Input Values
     private Vector2 playerMoveInput;
     private bool playerJumpInput;
@@ -37,6 +38,7 @@ public class FirstPersonController : MonoBehaviour
     private float verticalRotation;
     private Vector2 mouseLookInput;
     private bool playerWalkInput;
+    private bool playerAimInput;
 
     private void Awake()
     {
@@ -44,6 +46,7 @@ public class FirstPersonController : MonoBehaviour
         mainCamera = Camera.main;
         targetHeight = mainCameraTransform.localPosition.y;
         currentHeight = mainCameraTransform.localPosition.y;
+        defaultFirearmPosition = firearm.transform.localPosition;
     }
 
     void Start()
@@ -128,6 +131,20 @@ public class FirstPersonController : MonoBehaviour
         verticalRotation -= mouseLookInput.y * mouseSensitivity;
         verticalRotation = Mathf.Clamp(verticalRotation, -upDownRange, upDownRange);
         mainCamera.transform.localRotation = Quaternion.Euler(verticalRotation, 0, 0);
+    }
+
+    void OnAim(InputValue value)
+    {
+        if (value.isPressed)
+        {
+            firearm.transform.localPosition = new Vector3(0, -0.148f, firearm.transform.localPosition.z);
+            Debug.Log("Aim in");
+        }
+        else
+        {
+            firearm.transform.localPosition = defaultFirearmPosition;
+            Debug.Log("Aim out");
+        }
     }
 
     void OnSprint(InputValue value)
