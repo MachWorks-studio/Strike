@@ -5550,6 +5550,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7514653596408656348, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
+      objectReference: {fileID: 0}
     - target: {fileID: 7565524132944405238, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_Name
       value: 3DCanvas
