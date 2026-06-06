@@ -5,6 +5,7 @@ public class MenusUI : MonoBehaviour
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject stageSelectMenu;
     [SerializeField] private GameObject circuitMenu;
+    [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject confirmationMenu;
     [Header("Menu Backend")]
     [SerializeField] private GameObject currentMenu;
@@ -15,51 +16,64 @@ public class MenusUI : MonoBehaviour
     {
         currentMenu = mainMenu;
         ToggleMainMenuVisibility(true);
-        ToggleEnterStageSelectMenu(false);
+        ToggleEnterStageSelectMenuVisibility(false);
+        ToggleSettingsMenuVisibility(false);
+        ToggleConfirmationMenuVisibility(false);
+    }
+    
+    //--- Toggle Menu Visibility ---
+    public void ToggleCurrentMenuVisibility(bool visible)
+    {
+        currentMenu.SetActive(visible);
     }
     public void ToggleMainMenuVisibility(bool visible)
     {
         mainMenu.SetActive(visible);
     }
 
-    public void ToggleEnterStageSelectMenu(bool visible)
+    public void ToggleEnterStageSelectMenuVisibility(bool visible)
     {
         stageSelectMenu.SetActive(visible);
     }
 
-    public void ToggleCurrentMenuVisibility(bool visible)
+    public void ToggleSettingsMenuVisibility(bool visible)
     {
-        currentMenu.SetActive(visible);
+        settingsMenu.SetActive(visible);
     }
-
     public void ToggleConfirmationMenuVisibility(bool visible)
     {
         confirmationMenu.SetActive(visible);
     }
+    // Button Functionalities for going to menus
     public void GoBackMenu()
     {
-        Debug.Log("GoBackMenu");
         ToggleCurrentMenuVisibility(false);
         currentMenu = parentMenu;
         if (currentMenu = mainMenu)
         {
-            ToggleMainMenuVisibility(true);
             parentMenu = null;
             requestedButtonFunction = EButtonFunctions.Default;
+            ToggleMainMenuVisibility(true);
         }
         ToggleCurrentMenuVisibility(true);
     }
     public void EnterStageSelectMenu()
     {
-        Debug.Log("Enter Stage Select Menu");
         ToggleCurrentMenuVisibility(false);
+        ToggleEnterStageSelectMenuVisibility(true);
         currentMenu = stageSelectMenu;
         parentMenu = mainMenu;
-        ToggleEnterStageSelectMenu(true);
     }
-    // Stage Menu
     
-    // Circuit Menu
+    public void EnterSettingsMenu()
+    {
+        ToggleCurrentMenuVisibility(false);
+        ToggleSettingsMenuVisibility(true);
+        currentMenu = settingsMenu;
+        parentMenu = settingsMenu;
+    }
+    
+    //--- Circuit Menu ---
     public void StartCircuit()
     {
         //Debug.Log("StartCircuit");
@@ -71,20 +85,21 @@ public class MenusUI : MonoBehaviour
         Debug.Log("EndCircuit");
         GameManager.Instance.EndCircuit();
     }
-
+   //--- Settings Menu ---
     public void QuitGame()
     {
         ToggleCurrentMenuVisibility(false);
+        ToggleConfirmationMenuVisibility(true);
         requestedButtonFunction = EButtonFunctions.Quit;
         currentMenu = confirmationMenu;
         parentMenu = mainMenu;
-        ToggleConfirmationMenuVisibility(true);
     }
-
+    
+    //--- Stage Menu ---
     public void SelectStage(int stage)
     {
         int targetStage = stage;
-        Debug.Log($"{targetStage}");
+        Debug.Log($"Stage {targetStage} not implemented");
     }
 
     public void Confirm()
