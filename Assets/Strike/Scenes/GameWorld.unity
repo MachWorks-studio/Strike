@@ -309,7 +309,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6184575155443838944, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.5
+      value: -1
       objectReference: {fileID: 0}
     - target: {fileID: 6184575155443838944, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
       propertyPath: m_LocalPosition.z
@@ -419,6 +419,12 @@ MonoBehaviour:
   infiniteRounds: 0
   roundsInCircuit: 5
   currentRound: 1
+  stageData:
+  - {fileID: 11400000, guid: 5237f0e075e615f498d74167dae16aac, type: 2}
+  - {fileID: 11400000, guid: 86355e1c9c7b10e4ab7301a2a8e26838, type: 2}
+  - {fileID: 11400000, guid: ae41a4373a999554f9e6e64247fb082f, type: 2}
+  - {fileID: 11400000, guid: 1c39ac1db6b759f4d915a9113766235b, type: 2}
+  - {fileID: 11400000, guid: d18a48299d833214099b132544d3060c, type: 2}
   currentRoundState: 2
   currentRoundTime: 0
   previousRoundTimes:
@@ -2871,6 +2877,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StartButton
       objectReference: {fileID: 0}
+    - target: {fileID: 8158209579942111747, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8467490073854205886, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
       propertyPath: m_text
       value: Start
@@ -2878,10 +2888,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7254130083514815866, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 0}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
 --- !u!224 &1266900732 stripped
 RectTransform:
@@ -3998,6 +4005,11 @@ Transform:
 Transform:
   m_CorrespondingSourceObject: {fileID: 6184575155443838944, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
   m_PrefabInstance: {fileID: 199637511}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1644956740 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8158209579942111747, guid: 56b107273b821cc43b4e12dbf9ea9ca1, type: 3}
+  m_PrefabInstance: {fileID: 1503979029}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1684755222
 GameObject:
@@ -5494,6 +5506,10 @@ PrefabInstance:
       propertyPath: m_PresetInfoIsWorld
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3421948590711376262, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
+      propertyPath: ingameEndRoundButton
+      value: 
+      objectReference: {fileID: 1644956740}
     - target: {fileID: 5966541450985839189, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -5600,11 +5616,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 3.5
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.70710784
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalRotation.x
@@ -5612,7 +5628,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0.70710576
+      value: -0.000000014901161
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalRotation.z
@@ -5620,7 +5636,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 3.05002
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -5632,7 +5648,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 90
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z

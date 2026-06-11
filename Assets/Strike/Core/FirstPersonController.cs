@@ -138,12 +138,10 @@ public class FirstPersonController : MonoBehaviour
         if (value.isPressed)
         {
             firearm.transform.localPosition = new Vector3(0, -0.148f, firearm.transform.localPosition.z);
-            Debug.Log("Aim in");
         }
         else
         {
             firearm.transform.localPosition = defaultFirearmPosition;
-            Debug.Log("Aim out");
         }
     }
 

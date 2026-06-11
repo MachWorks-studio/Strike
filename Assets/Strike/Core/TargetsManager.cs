@@ -8,7 +8,7 @@ public class TargetsManager : MonoBehaviour
     
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Transform[] spawnPoints;
-    [SerializeField] private int targetCount = 5;
+    [SerializeField] public int targetCount = 5;
     
     [SerializeField] Target[] activeTargets;
     public int targetsRemaining;
@@ -29,11 +29,6 @@ public class TargetsManager : MonoBehaviour
             return;
         }
         Instance = this;
-    }
-    
-    void Start()
-    {
-        //SpawnAllTargets();
     }
 
     public void SpawnAllTargets()
@@ -83,13 +78,7 @@ public class TargetsManager : MonoBehaviour
         activeTargets = null;
         GameManager.Instance.EndRound();
         if (willSpawnNextRound)
-        {
             _waitForNextRoundCoroutine = StartCoroutine(SpawnAfterDelay(2f));
-        }
-        else
-        {
-            
-        }
     }
     // ReSharper disable Unity.PerformanceAnalysis
     IEnumerator SpawnAfterDelay(float delay)
@@ -98,10 +87,7 @@ public class TargetsManager : MonoBehaviour
         GameManager.Instance.NextRound();
     }
 
-    public void SetContinueToNextRound(bool value)
-    {
-        willSpawnNextRound = value;
-    }
+    public void SetContinueToNextRound(bool value) => willSpawnNextRound = value;
 
     public void StopWaitingForNextRound()
     {

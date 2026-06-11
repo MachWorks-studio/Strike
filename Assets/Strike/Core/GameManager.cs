@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
     public bool infiniteRounds = false;
     public int roundsInCircuit = 5;
     public int currentRound = 1;
+    [SerializeField] private StageData[] stageData;
     [SerializeField] private ERounds currentRoundState = ERounds.Completed;
     [SerializeField] private float currentRoundTime;
     [SerializeField] private float[] previousRoundTimes = { 0f };
@@ -44,11 +45,6 @@ public class GameManager : MonoBehaviour
         audioSourceGameManager = gameObject.GetComponent<AudioSource>();
     }
 
-    void Start()
-    {
-        
-    }
-
     private void Update()
     {
         if (!roundIsRunning) return;
@@ -57,6 +53,17 @@ public class GameManager : MonoBehaviour
         UpdateRoundTimesText();
     }
 
+    public void InitializeStageData(int stageNumber)
+    {
+        StageData currentStageData = stageData[stageNumber];
+        roundsInCircuit = currentStageData.roundsInCircuit;
+        infiniteRounds = currentStageData.infiniteRounds;
+        TargetsManager.Instance.targetCount = currentStageData.targetsCountAtRound[1];
+        if (infiniteRounds)
+            Debug.Log("Infinite rounds in circuit");
+        else
+            Debug.Log($"{currentStageData.roundsInCircuit} Rounds in circuit");
+    }
     public void StartCircuit()
     {
         if (_countDownCoroutine == null)
@@ -103,8 +110,8 @@ public class GameManager : MonoBehaviour
             audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
             UpdateCurrentCircuitTimesText();
             countDownText.gameObject.SetActive(false);
+            OnEndCircuit?.Invoke();
         }
-        OnEndCircuit?.Invoke();
     }
     public void SetRoundState(ERounds state)
     {
@@ -142,26 +149,21 @@ public class GameManager : MonoBehaviour
 
     public void EndRound()
     {
-        if (roundIsRunning)
+        roundIsRunning = false;
+        SaveRoundTime();
+        UpdateCurrentCircuitTimesText();
+        if (TargetsManager.Instance.willSpawnNextRound == false)
         {
-            roundIsRunning = false;
-            SaveRoundTime();
-            UpdateCurrentCircuitTimesText();
-            if (TargetsManager.Instance.willSpawnNextRound == false)
-            {
-                SetRoundState(ERounds.Completed);
-                audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
-                OnEndCircuit?.Invoke();
-                StopCoroutine(_countDownCoroutine);
-                _countDownCoroutine = null;
-            }
-            else
-            {
-                SetRoundState(ERounds.Paused);
-                audioSourceGameManager.PlayOneShot(roundEndAudioClip);
-            }
+            SetRoundState(ERounds.Completed);
+            OnEndCircuit();
+            audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
+            StopCountDown();
         }
-        OnEndRound?.Invoke();
+        else
+        {
+            SetRoundState(ERounds.Paused);
+            audioSourceGameManager.PlayOneShot(roundEndAudioClip);
+        }
     }
     public void NextRound()
     {
@@ -175,6 +177,15 @@ public class GameManager : MonoBehaviour
             EndRound();
         }
         OnNextRound?.Invoke();
+    }
+
+    private void StopCountDown()
+    {
+        if (_countDownCoroutine != null)
+        {
+            StopCoroutine(_countDownCoroutine);
+            _countDownCoroutine = null;
+        }
     }
 
     private void SaveRoundTime()
