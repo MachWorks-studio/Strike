@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+[RequireComponent(typeof(LineRenderer))]
 public class Gun : MonoBehaviour
 {
     private AudioSource firingSound;
@@ -13,13 +14,21 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject projectileOriginLocation;
     [SerializeField] private GameObject projectileImpactPrefab;
     [SerializeField] private GameObject muzzleFlash;
+    [Header("Laser Properties")]
+    [SerializeField] private Transform LaserOrigin;
+    [SerializeField] private float maxLaserDistance = 1000f;
+    [SerializeField] private LayerMask laserLayerMask;
+    [SerializeField] private GameObject laserImpactPrefab;
+    private GameObject laserDecal;
+    private LineRenderer laserLineRenderer;
+    private Button currentHoverButton;
     private ParticleSystem muzzleFlashParticles;
     private Animator gunAnimator;
     private Camera eventCamera;
 
-    public InputActionProperty VRShoot;
-    public float hapticAmplitude = 0.1f;
-    public float hapticDuration = 0.02f;
+    [SerializeField] private InputActionProperty VRShoot;
+    [SerializeField] private float hapticAmplitude = 0.1f;
+    [SerializeField] private float hapticDuration = 0.02f;
     
     [SerializeField] private BulletTracerSpawner bulletTracerSpawner;
 
@@ -31,13 +40,19 @@ public class Gun : MonoBehaviour
         firingSound = GetComponent<AudioSource>();
         gunAnimator = GetComponentInChildren<Animator>();
         muzzleFlashParticles = muzzleFlash.GetComponent<ParticleSystem>();
+        
+        laserLineRenderer = GetComponent<LineRenderer>();
+        laserLineRenderer.positionCount = 2;
+        laserLineRenderer.useWorldSpace = true;
+        if (laserImpactPrefab != null)
+            laserDecal = Instantiate(laserImpactPrefab);
     }
     void Start()
     {
     }
     void Update()
     {
-        
+        UpdateLaser();
     }
     void OnVRShootPerformed(InputAction.CallbackContext context)
     {
@@ -130,5 +145,42 @@ public class Gun : MonoBehaviour
         }
     }
 
+    private void UpdateLaser()
+    {
+        Vector3 laserOrigin = LaserOrigin.position;
+        Vector3 laserEnd;
+        Button hoveredButton = null;
+        if (Physics.Raycast(laserOrigin, transform.forward, out RaycastHit laserHitInfo, maxLaserDistance,
+                laserLayerMask))
+        {
+            laserEnd = laserHitInfo.point;
+            hoveredButton = laserHitInfo.collider.GetComponentInParent<Button>();
+            if (laserDecal != null)
+            {
+                laserDecal.SetActive(true);
+                laserDecal.transform.position = laserHitInfo.point;
+                laserDecal.transform.rotation = Quaternion.LookRotation(laserHitInfo.normal);
+            }
+        }
+        else
+        {
+            laserEnd = laserOrigin + transform.forward * maxLaserDistance;
+            if (laserDecal != null)
+                laserDecal.SetActive(false);
+        }
+        laserLineRenderer.SetPosition(0, laserOrigin);
+        laserLineRenderer.SetPosition(1, laserEnd);
+        HandleButtonHover(hoveredButton);
+    }
+
+    private void HandleButtonHover(Button button)
+    {
+        if (button == currentHoverButton) return;
+        if (currentHoverButton != null)
+            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
+        currentHoverButton = button;
+        if (currentHoverButton != null)
+            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerExitHandler);
+    }
     public void SetEventCamera(Camera cam) => eventCamera = cam;
 }
