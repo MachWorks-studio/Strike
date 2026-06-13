@@ -12,7 +12,9 @@ GameObject:
   - component: {fileID: 4861122287136962354}
   - component: {fileID: 136396189765915473}
   - component: {fileID: 8201605936884018924}
-  m_Layer: 0
+  - component: {fileID: 3646456443903296820}
+  - component: {fileID: 4595436326016125171}
+  m_Layer: 5
   m_Name: SelectStageButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -122,6 +124,39 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls: []
+--- !u!65 &3646456443903296820
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4654834292636539197}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4595436326016125171
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4654834292636539197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f6f4c1500c81d4d488928c3b5c23d305, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonCollider
 --- !u!1 &5074802643327119100
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,7 +168,7 @@ GameObject:
   - component: {fileID: 485244698268623336}
   - component: {fileID: 7288112867613645689}
   - component: {fileID: 39912819394367617}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -270,7 +305,7 @@ GameObject:
   - component: {fileID: 5049443490403852926}
   - component: {fileID: 4345879329030372185}
   - component: {fileID: 3786761752519606013}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: StageIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}

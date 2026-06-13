@@ -83,13 +83,13 @@ public class Gun : MonoBehaviour
         Ray shootRay = new Ray(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward));
         if  (Physics.Raycast(shootRay, out RaycastHit hitInfo, 1000f))
         {
+            Button button = hitInfo.collider.GetComponent<Button>();
+            if (button != null)
+            {
+                button.onClick.Invoke();
+                return;
+            }
             // Raycast Success
-            Debug.DrawRay
-            (projectileOriginLocation.transform.position,
-                projectileOriginLocation.transform.TransformDirection(Vector3.forward) * hitInfo.distance,
-                Color.green,
-                2f);
-            
             IDamageable damageable = hitInfo.collider.GetComponentInParent<IDamageable>();
             
             if (damageable != null)
@@ -117,34 +117,7 @@ public class Gun : MonoBehaviour
             );
             // Spawn bullet tracer going to empty space
         }
-        ShootUIRaycast(shootRay);
     }
-
-    private void ShootUIRaycast(Ray shootRayUI)
-    {
-        if (eventCamera == null) return;
-        
-        Vector2 screenPosition = eventCamera.WorldToScreenPoint(shootRayUI.origin + shootRayUI.direction);
-
-        PointerEventData pointerEventData = new PointerEventData(EventSystem.current)
-        {
-            position = screenPosition,
-        };
-        
-        List<RaycastResult> results = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(pointerEventData, results);
-
-        foreach (RaycastResult result in results)
-        {
-            Button button = result.gameObject.GetComponent<Button>();
-            if (button != null)
-            {
-                button.onClick.Invoke();
-                return;
-            }
-        }
-    }
-
     private void UpdateLaser()
     {
         Vector3 laserOrigin = LaserOrigin.position;

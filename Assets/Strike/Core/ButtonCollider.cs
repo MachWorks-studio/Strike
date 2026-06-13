@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System.Collections;
 
 [RequireComponent(typeof(BoxCollider))]
 [RequireComponent(typeof(RectTransform))]
@@ -15,13 +16,24 @@ public class ButtonCollider : MonoBehaviour
         SyncCollider();
     }
 
-#if UNITY_EDITOR
-    void OnValidate() => SyncCollider();
-#endif
-    private void SyncCollider()
+    void OnEnable()
+    {
+        StartCoroutine(SyncOnEnable());
+    }
+
+    IEnumerator SyncOnEnable()
+    {
+        yield return null;
+        SyncCollider();
+    }
+
+    public void SyncCollider()
     {
         if (_boxCollider == null || _rectTransform == null) return;
         _boxCollider.size = new Vector3(_rectTransform.rect.width, _rectTransform.rect.height, 0.1f);
         _boxCollider.center = Vector3.zero;
     }
+#if UNITY_EDITOR
+    void OnValidate() => SyncCollider();
+#endif
 }
