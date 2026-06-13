@@ -19,8 +19,13 @@ public class Gun : MonoBehaviour
     [SerializeField] private float maxLaserDistance = 1000f;
     [SerializeField] private LayerMask laserLayerMask;
     [SerializeField] private GameObject laserImpactPrefab;
+    [SerializeField] private Material laserDefaultMaterial;
+    [SerializeField] private Material laserHoverMaterial;
+    private bool laserEnabled = true;
+    private bool isHoveringUI;
     private GameObject laserDecal;
     private LineRenderer laserLineRenderer;
+    
     private Button currentHoverButton;
     private ParticleSystem muzzleFlashParticles;
     private Animator gunAnimator;
@@ -52,7 +57,8 @@ public class Gun : MonoBehaviour
     }
     void Update()
     {
-        UpdateLaser();
+        if (laserEnabled)
+            UpdateLaser();
     }
     void OnVRShootPerformed(InputAction.CallbackContext context)
     {
@@ -123,12 +129,14 @@ public class Gun : MonoBehaviour
         Vector3 laserOrigin = LaserOrigin.position;
         Vector3 laserEnd;
         Button hoveredButton = null;
-        if (Physics.Raycast(laserOrigin, transform.forward, out RaycastHit laserHitInfo, maxLaserDistance,
-                laserLayerMask))
+        
+        if (Physics.Raycast(laserOrigin, LaserOrigin.forward, out RaycastHit laserHitInfo, maxLaserDistance,laserLayerMask))
         {
             laserEnd = laserHitInfo.point;
             hoveredButton = laserHitInfo.collider.GetComponentInParent<Button>();
-            if (laserDecal != null)
+            isHoveringUI = hoveredButton != null;
+            
+            if (isHoveringUI && laserDecal != null)
             {
                 laserDecal.SetActive(true);
                 laserDecal.transform.position = laserHitInfo.point;
@@ -137,23 +145,31 @@ public class Gun : MonoBehaviour
         }
         else
         {
+            isHoveringUI = false;
             laserEnd = laserOrigin + transform.forward * maxLaserDistance;
-            if (laserDecal != null)
-                laserDecal.SetActive(false);
         }
+        
+        laserLineRenderer.enabled = true;
+        laserLineRenderer.material = isHoveringUI ? laserHoverMaterial : laserDefaultMaterial;
+        
+        if (!isHoveringUI && laserDecal != null)
+            laserDecal.SetActive(false);
+        
         laserLineRenderer.SetPosition(0, laserOrigin);
         laserLineRenderer.SetPosition(1, laserEnd);
         HandleButtonHover(hoveredButton);
     }
+    
+    public void ToggleEnableLaser(bool enable) => laserEnabled = enable;
 
     private void HandleButtonHover(Button button)
     {
         if (button == currentHoverButton) return;
         if (currentHoverButton != null)
-            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
+            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerExitHandler);
         currentHoverButton = button;
         if (currentHoverButton != null)
-            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerExitHandler);
+            ExecuteEvents.Execute(currentHoverButton.gameObject, new PointerEventData(EventSystem.current), ExecuteEvents.pointerEnterHandler);
     }
     public void SetEventCamera(Camera cam) => eventCamera = cam;
 }
