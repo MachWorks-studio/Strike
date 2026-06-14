@@ -133,6 +133,7 @@ public class Gun : MonoBehaviour
                 2f
             );
             // Spawn bullet tracer going to empty space here
+            bulletTracerSpawner.SpawnBulletTracer(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 1000f);
         }
     }
     private void UpdateLaser()
