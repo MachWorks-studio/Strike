@@ -8,14 +8,12 @@ public class ButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     [SerializeField] private TextMeshProUGUI buttonText;
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color hoverColor = Color.black;
-    [SerializeField] private AudioClip hoverSound;
-    [SerializeField] private AudioClip clickSound;
-    private AudioSource audioSource;
+    private MenusUI menusUI;
 
     private void Awake()
     {
+        menusUI = GetComponentInParent<MenusUI>();
         buttonText = GetComponentInChildren<TextMeshProUGUI>();
-        audioSource = GetComponent<AudioSource>();
     }
     private void OnEnable()
     {
@@ -29,7 +27,7 @@ public class ButtonUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         buttonText.color = hoverColor;
-        audioSource.PlayOneShot(hoverSound);
+        menusUI.PlayHoverSound();
     }
     public void OnPointerExit(PointerEventData eventData)
     {

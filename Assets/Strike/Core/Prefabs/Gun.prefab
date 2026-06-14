@@ -92,6 +92,8 @@ MonoBehaviour:
   laserImpactPrefab: {fileID: 8221790376176175582, guid: 4e03a824f999f414da42f92ffeccb2a5, type: 3}
   laserDefaultMaterial: {fileID: 2100000, guid: b8ce7e958a3d0f1408b6f484eb6d840e, type: 2}
   laserHoverMaterial: {fileID: 2100000, guid: 886be9f0de168184f8f1b26bb36151de, type: 2}
+  laserDecalDefaultMaterial: {fileID: 2100000, guid: c2a07e81c60d4384fb1ce4b6b3a2a680, type: 2}
+  laserDecalHoverMaterial: {fileID: 2100000, guid: a80a04e2e3ff3a246836de17cc0e0302, type: 2}
   VRShoot:
     m_UseReference: 1
     m_Action:

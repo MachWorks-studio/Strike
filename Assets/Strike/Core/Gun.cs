@@ -4,6 +4,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(LineRenderer))]
@@ -21,9 +22,12 @@ public class Gun : MonoBehaviour
     [SerializeField] private GameObject laserImpactPrefab;
     [SerializeField] private Material laserDefaultMaterial;
     [SerializeField] private Material laserHoverMaterial;
+    [SerializeField] private Material laserDecalDefaultMaterial;
+    [SerializeField] private Material laserDecalHoverMaterial;
     private bool laserEnabled = true;
     private bool isHoveringUI;
-    private GameObject laserDecal;
+    private GameObject laserDecalObject;
+    private DecalProjector laserDecalProjector;
     private LineRenderer laserLineRenderer;
     
     private Button currentHoverButton;
@@ -61,7 +65,10 @@ public class Gun : MonoBehaviour
         laserLineRenderer.positionCount = 2;
         laserLineRenderer.useWorldSpace = true;
         if (laserImpactPrefab != null)
-            laserDecal = Instantiate(laserImpactPrefab);
+        {
+            laserDecalObject = Instantiate(laserImpactPrefab);
+            laserDecalProjector = laserDecalObject.GetComponentInChildren<DecalProjector>();
+        }
     }
     void Start()
     {
@@ -148,9 +155,9 @@ public class Gun : MonoBehaviour
             hoveredButton = laserHitInfo.collider.GetComponentInParent<Button>();
             isHoveringUI = hoveredButton != null;
             
-            laserDecal.SetActive(true);
-            laserDecal.transform.position = laserHitInfo.point;
-            laserDecal.transform.rotation = Quaternion.LookRotation(laserHitInfo.normal);
+            laserDecalObject.SetActive(true);
+            laserDecalObject.transform.position = laserHitInfo.point;
+            laserDecalObject.transform.rotation = Quaternion.LookRotation(laserHitInfo.normal);
         }
         else
         {
@@ -160,6 +167,7 @@ public class Gun : MonoBehaviour
         
         laserLineRenderer.enabled = true;
         laserLineRenderer.material = isHoveringUI ? laserHoverMaterial : laserDefaultMaterial;
+        laserDecalProjector.material = isHoveringUI ? laserDecalHoverMaterial : laserDecalDefaultMaterial;
         laserLineRenderer.SetPosition(0, laserOrigin);
         laserLineRenderer.SetPosition(1, laserEnd);
         HandleButtonHover(hoveredButton);
@@ -169,7 +177,7 @@ public class Gun : MonoBehaviour
     {
         laserEnabled = false;
         laserLineRenderer.enabled = false;
-        laserDecal.SetActive(false);
+        laserDecalObject.SetActive(false);
         laserLineRenderer.material = laserDefaultMaterial;
     }
 

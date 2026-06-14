@@ -13,10 +13,15 @@ public class MenusUI : MonoBehaviour
     [SerializeField] private GameObject parentMenu;
     [Header("Game Object References")]
     [SerializeField] private GameObject ingameEndRoundButton;
+    [Header("Menu Sounds")]
+    [SerializeField] private AudioClip hoverSound;
+    [SerializeField] private AudioClip clickSound;
+	private AudioSource menuAudioSource;
     private EButtonFunctions requestedButtonFunction;
 
     void Awake()
     {
+		menuAudioSource = GetComponent<AudioSource>();
         currentMenu = mainMenu;
         parentMenu = null;
         ingameEndRoundButton.SetActive(false);
@@ -60,6 +65,7 @@ public class MenusUI : MonoBehaviour
     // Button Functionalities for going to menus
     public void GoBackMenu()
     {
+        PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         currentMenu = parentMenu;
         if (currentMenu == mainMenu)
@@ -78,6 +84,7 @@ public class MenusUI : MonoBehaviour
     }
     public void EnterStageSelectMenu()
     {
+        PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         ToggleEnterStageSelectMenuVisibility(true);
         currentMenu = stageSelectMenu;
@@ -86,6 +93,7 @@ public class MenusUI : MonoBehaviour
     
     public void EnterSettingsMenu()
     {
+        PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         ToggleSettingsMenuVisibility(true);
         currentMenu = settingsMenu;
@@ -101,6 +109,7 @@ public class MenusUI : MonoBehaviour
 
     public void EnterCircuitMenu()
     {
+        PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         ToggleCircuitMenuVisibility(true);
         currentMenu = circuitMenu;
@@ -124,16 +133,10 @@ public class MenusUI : MonoBehaviour
         HideAllMenus();
         ingameEndRoundButton.SetActive(true);
     }
-
-    public void EndCircuit()
-    {
-        Debug.Log("EndCircuit");
-        GameManager.Instance.EndCircuit();
-        ingameEndRoundButton.SetActive(false);
-    }
    //--- Settings Menu ---
     public void QuitGame()
     {
+        PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         ToggleConfirmationMenuVisibility(true);
         requestedButtonFunction = EButtonFunctions.Quit;
@@ -160,4 +163,6 @@ public class MenusUI : MonoBehaviour
                 break;
         }
     }
+    public void PlayHoverSound() => menuAudioSource.PlayOneShot(hoverSound);
+    public void PlayClickSound() => menuAudioSource.PlayOneShot(clickSound);
 }
