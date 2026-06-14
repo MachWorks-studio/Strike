@@ -73,7 +73,6 @@ public class GameManager : MonoBehaviour
             previousRoundTimes = new float []{ 0f };
             SetRoundState(ERounds.Paused);
             UpdateRoundTimesText();
-            countDownText.gameObject.SetActive(true);
             OnStartCircuit?.Invoke();
         }
     }
@@ -109,7 +108,6 @@ public class GameManager : MonoBehaviour
             SetRoundState(ERounds.Completed);
             audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
             UpdateCurrentCircuitTimesText();
-            countDownText.gameObject.SetActive(false);
             OnEndCircuit?.Invoke();
         }
     }
