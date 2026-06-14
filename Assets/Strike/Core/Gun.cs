@@ -37,8 +37,19 @@ public class Gun : MonoBehaviour
     
     [SerializeField] private BulletTracerSpawner bulletTracerSpawner;
 
-    void OnEnable() => VRShoot.action.performed += OnVRShootPerformed;
-    void OnDisable() => VRShoot.action.performed -= OnVRShootPerformed;
+    void OnEnable()
+    {
+        VRShoot.action.performed += OnVRShootPerformed;
+        GameManager.OnStartCircuit += DisableLaser;
+        GameManager.OnEndCircuit += EnableLaser;
+    }
+
+    void OnDisable()
+    {
+        VRShoot.action.performed -= OnVRShootPerformed;
+        GameManager.OnStartCircuit -= DisableLaser;
+        GameManager.OnEndCircuit -= EnableLaser;
+    }
 
     private void Awake()
     {
@@ -121,7 +132,7 @@ public class Gun : MonoBehaviour
                 Color.red,
                 2f
             );
-            // Spawn bullet tracer going to empty space
+            // Spawn bullet tracer going to empty space here
         }
     }
     private void UpdateLaser()
@@ -136,12 +147,9 @@ public class Gun : MonoBehaviour
             hoveredButton = laserHitInfo.collider.GetComponentInParent<Button>();
             isHoveringUI = hoveredButton != null;
             
-            if (isHoveringUI && laserDecal != null)
-            {
-                laserDecal.SetActive(true);
-                laserDecal.transform.position = laserHitInfo.point;
-                laserDecal.transform.rotation = Quaternion.LookRotation(laserHitInfo.normal);
-            }
+            laserDecal.SetActive(true);
+            laserDecal.transform.position = laserHitInfo.point;
+            laserDecal.transform.rotation = Quaternion.LookRotation(laserHitInfo.normal);
         }
         else
         {
@@ -151,16 +159,18 @@ public class Gun : MonoBehaviour
         
         laserLineRenderer.enabled = true;
         laserLineRenderer.material = isHoveringUI ? laserHoverMaterial : laserDefaultMaterial;
-        
-        if (!isHoveringUI && laserDecal != null)
-            laserDecal.SetActive(false);
-        
         laserLineRenderer.SetPosition(0, laserOrigin);
         laserLineRenderer.SetPosition(1, laserEnd);
         HandleButtonHover(hoveredButton);
     }
-    
-    public void ToggleEnableLaser(bool enable) => laserEnabled = enable;
+    private void EnableLaser() => laserEnabled = true;
+    private void DisableLaser()
+    {
+        laserEnabled = false;
+        laserLineRenderer.enabled = false;
+        laserDecal.SetActive(false);
+        laserLineRenderer.material = laserDefaultMaterial;
+    }
 
     private void HandleButtonHover(Button button)
     {
