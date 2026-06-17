@@ -36,11 +36,14 @@ public class MenusUI : MonoBehaviour
     {
         GameManager.OnEndCircuit += GameObjectOnEndCircuit;
         GameManager.OnEndRound += GameManagerOnEndRound;
+        FadeManager.Instance.OnFadeToBlackComplete += HandleFadeComplete;
     }
+
     private void OnDisable()
     {
         GameManager.OnEndCircuit -= GameObjectOnEndCircuit;
         GameManager.OnEndRound -= GameManagerOnEndRound;
+        FadeManager.Instance.OnFadeToBlackComplete -= HandleFadeComplete;
     }
     private void GameObjectOnEndCircuit()
     {
@@ -48,11 +51,17 @@ public class MenusUI : MonoBehaviour
         Debug.Log("Circuit Complete");
         ingameEndRoundButton.SetActive(false);
     }
+
+    private void HandleFadeComplete()
+    {
+        if (requestedButtonFunction == EButtonFunctions.Quit)
+            GameManager.Instance.QuitGame();
+    }
     private void GameManagerOnEndRound()
     {
         ingameEndRoundButton.SetActive(false);
     }
-
+    
     //--- Toggle Menu Visibility ---
     public void ToggleCurrentMenuVisibility(bool visible) => currentMenu.SetActive(visible);
     public void ToggleMainMenuVisibility(bool visible) => mainMenu.SetActive(visible);
@@ -159,7 +168,7 @@ public class MenusUI : MonoBehaviour
             case EButtonFunctions.Default:
                 break;
             case EButtonFunctions.Quit:
-                GameManager.Instance.QuitGame();
+                FadeManager.Instance.FadeToBlack();
                 break;
         }
     }
