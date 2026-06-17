@@ -31,6 +31,11 @@ public class MenusUI : MonoBehaviour
         ToggleCircuitMenuVisibility(false);
         ToggleConfirmationMenuVisibility(false);
     }
+
+    void Start()
+    {
+        FadeManager.Instance.FadeFromBlack();
+    }
     //--- Event Bindings ---
     private void OnEnable()
     {
