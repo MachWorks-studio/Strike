@@ -12,6 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a18be788369574aa43a90028b763b7, type: 3}
   m_Name: Stage1_Data
   m_EditorClassIdentifier: Assembly-CSharp::StageData
-  roundsInCircuit: 2
-  targetsCountAtRound: 00000000030000000300000003000000
   infiniteRounds: 0
+  roundTargetData:
+  - targetSelectionMode: 0
+    specificTargetIndices: 
+    randomTargetCount: 5
+  - targetSelectionMode: 1
+    specificTargetIndices: 0200000004000000
+    randomTargetCount: 0
+  - targetSelectionMode: 1
+    specificTargetIndices: 0b00000013000000
+    randomTargetCount: 0

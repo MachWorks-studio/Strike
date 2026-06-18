@@ -5,7 +5,7 @@ using UnityEngine;
 public class TargetsManager : MonoBehaviour
 {
     public static TargetsManager Instance { get; private set; }
-    
+    [SerializeField] private RoundTargetData[] currentRoundTargetData;
     [SerializeField] private GameObject targetPrefab;
     [SerializeField] private Transform[] spawnPoints;
     [SerializeField] public int targetCount = 5;
@@ -16,11 +16,6 @@ public class TargetsManager : MonoBehaviour
     
     private Coroutine _waitForNextRoundCoroutine;
 
-    //For Clamping Inspector values
-    private void OnValidate()
-    {
-        targetCount = Mathf.Clamp(targetCount, 1, spawnPoints.Length);
-    }
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -31,17 +26,48 @@ public class TargetsManager : MonoBehaviour
         Instance = this;
     }
 
-    public void SpawnAllTargets()
+    public void InitializeRoundTargetData(RoundTargetData[] data)
     {
-        int spawnCount = Mathf.Clamp(targetCount, 0, spawnPoints.Length);
-        
-        Transform[] shuffledTargets = spawnPoints.OrderBy(_=> Random.value).ToArray();
-        
-        activeTargets = new Target[spawnCount];
+        currentRoundTargetData = data;
+    }
 
-        for (int i = 0; i < spawnCount; i++)
+    public void UpdateTargetCount(int roundNumber)
+    {
+        RoundTargetData roundData = currentRoundTargetData[roundNumber];
+
+        if (roundData.targetSelectionMode == TargetSelectionMode.Specific)
         {
-            activeTargets[i] = Instantiate(targetPrefab, shuffledTargets[i].position, shuffledTargets[i].rotation).GetComponent<Target>();
+            targetCount = roundData.specificTargetIndices.Length;
+        }
+        else
+        {
+            targetCount = roundData.randomTargetCount;
+        }
+    }
+    public void SpawnAllTargets(int roundNumber)
+    {
+        RoundTargetData roundData = currentRoundTargetData[roundNumber];
+
+        int[] indicesToSpawn;
+        if (roundData.targetSelectionMode == TargetSelectionMode.Specific)
+        {
+            indicesToSpawn = roundData.specificTargetIndices;
+        }
+        else
+        {
+            indicesToSpawn = spawnPoints
+                .Select((point, index) => index)
+                .OrderBy(_ => Random.value)
+                .Take(targetCount)
+                .ToArray();
+        }
+
+        activeTargets = new Target[indicesToSpawn.Length];
+
+        for (int i = 0; i < indicesToSpawn.Length; i++)
+        {
+            Transform spawnPoint = spawnPoints[indicesToSpawn[i]];
+            activeTargets[i] = Instantiate(targetPrefab, spawnPoint.position, spawnPoint.rotation).GetComponent<Target>();
             activeTargets[i].OnTargetHit += HandleTargetHit;
         }
         targetsRemaining = activeTargets.Length;

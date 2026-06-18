@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviour
     public void InitializeStageData(int stageNumber)
     {
         StageData currentStageData = stageData[stageNumber];
-        roundsInCircuit = currentStageData.roundsInCircuit;
+        roundsInCircuit = currentStageData.roundTargetData.Length - 1;
         infiniteRounds = currentStageData.infiniteRounds;
-        TargetsManager.Instance.targetCount = currentStageData.targetsCountAtRound[1];
+        TargetsManager.Instance.InitializeRoundTargetData(currentStageData.roundTargetData);
         if (infiniteRounds)
             Debug.Log("Infinite rounds in circuit");
         else
-            Debug.Log($"{currentStageData.roundsInCircuit} Rounds in circuit");
+            Debug.Log($"{currentStageData.roundTargetData.Length} Rounds in circuit");
     }
     public void StartCircuit()
     {
@@ -130,7 +130,10 @@ public class GameManager : MonoBehaviour
             {
                 audioSourceGameManager.PlayOneShot(roundStartAudioClip);
             }
-            TargetsManager.Instance.SpawnAllTargets();
+
+            int roundDataIndex = infiniteRounds ? 0 : currentRound;
+            TargetsManager.Instance.UpdateTargetCount(roundDataIndex);
+            TargetsManager.Instance.SpawnAllTargets(roundDataIndex);
             SetRoundState(ERounds.Running);
             currentRoundTime = 0f;
             roundIsRunning = true;
@@ -164,6 +167,7 @@ public class GameManager : MonoBehaviour
             SetRoundState(ERounds.Paused);
             audioSourceGameManager.PlayOneShot(roundEndAudioClip);
         }
+        OnEndRound?.Invoke();
     }
     public void NextRound()
     {
