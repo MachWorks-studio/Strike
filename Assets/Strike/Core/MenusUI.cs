@@ -66,7 +66,7 @@ public class MenusUI : MonoBehaviour
     }
     private void GameManagerOnEndRound()
     {
-        ingameEndRoundButton.SetActive(false);
+        //ingameEndRoundButton.SetActive(false);
     }
     
     //--- Toggle Menu Visibility ---

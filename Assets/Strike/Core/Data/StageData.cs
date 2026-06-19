@@ -12,6 +12,8 @@ public class RoundTargetData
     
     // Used when mode == Random (falls back to targetsCountAtRound if you want)
     public int randomTargetCount;
+
+    public GameObject coverMeshObject;
 }
 [CreateAssetMenu(fileName = "StageData", menuName = "Scriptable Objects/StageData")]
 public class StageData : ScriptableObject

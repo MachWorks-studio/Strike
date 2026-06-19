@@ -21,6 +21,7 @@ public class GameManager : MonoBehaviour
     public int roundsInCircuit = 5;
     public int currentRound = 1;
     [SerializeField] private StageData[] stageData;
+	private StageData currentStageData;
     [SerializeField] private ERounds currentRoundState = ERounds.Completed;
     [SerializeField] private float currentRoundTime;
     [SerializeField] private float[] previousRoundTimes = { 0f };
@@ -55,7 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void InitializeStageData(int stageNumber)
     {
-        StageData currentStageData = stageData[stageNumber];
+        currentStageData = stageData[stageNumber];
         roundsInCircuit = currentStageData.roundTargetData.Length - 1;
         infiniteRounds = currentStageData.infiniteRounds;
         TargetsManager.Instance.InitializeRoundTargetData(currentStageData.roundTargetData);
@@ -134,6 +135,7 @@ public class GameManager : MonoBehaviour
             int roundDataIndex = infiniteRounds ? 0 : currentRound;
             TargetsManager.Instance.UpdateTargetCount(roundDataIndex);
             TargetsManager.Instance.SpawnAllTargets(roundDataIndex);
+            CoverManager.Instance.SetCoverMesh(currentStageData.roundTargetData[roundDataIndex].coverMeshObject);
             SetRoundState(ERounds.Running);
             currentRoundTime = 0f;
             roundIsRunning = true;

@@ -17,12 +17,16 @@ MonoBehaviour:
   - targetSelectionMode: 0
     specificTargetIndices: 
     randomTargetCount: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 1e0000002300000028000000
     randomTargetCount: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: e35f59af9ab6bf4408e8d88ce23768ab, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 28000000320000003c000000
     randomTargetCount: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 469448d1677a2ec49b2a5fcec044a84e, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 370000003e00000045000000
     randomTargetCount: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: e4ad4e2acea69d74d96ef831b8d3cbbb, type: 3}

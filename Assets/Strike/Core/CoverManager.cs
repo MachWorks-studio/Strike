@@ -10,9 +10,18 @@ public class CoverManager : MonoBehaviour
     [SerializeField] private Mesh[] coverMeshes;
 
     private HashSet<int> usedIndices = new HashSet<int>();
+    
+    public static CoverManager Instance {  get; private set; }
 
     void Awake()
     {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        
         DisableCover();
         coverMeshFilter = cover.GetComponent<MeshFilter>();
         coverMeshCollider = cover.GetComponent<MeshCollider>();
@@ -21,12 +30,17 @@ public class CoverManager : MonoBehaviour
     private void EnableCover()
     {
         cover.gameObject.SetActive(true);
-        coverMeshFilter.mesh = GetRandomUnusedCoverMesh();
-        coverMeshCollider.sharedMesh = coverMeshFilter.mesh;
     }
     private void DisableCover()
     {
         cover.gameObject.SetActive(false);
+    }
+
+    public void SetCoverMesh(GameObject meshObject)
+    {
+        Mesh mesh = meshObject.GetComponent<MeshFilter>().sharedMesh;
+        coverMeshFilter.mesh = mesh;
+        coverMeshCollider.sharedMesh = mesh;
     }
 
     private void OnEnable()
