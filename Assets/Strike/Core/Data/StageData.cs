@@ -1,6 +1,7 @@
 using UnityEngine;
 
 public enum TargetSelectionMode { Random, Specific }
+public enum CoverSelectionMode { Specific, Random }
 
 [System.Serializable]
 public class RoundTargetData
@@ -12,7 +13,8 @@ public class RoundTargetData
     
     // Used when mode == Random (falls back to targetsCountAtRound if you want)
     public int randomTargetCount;
-
+    
+    public CoverSelectionMode coverSelectionMode = CoverSelectionMode.Specific;
     public GameObject coverMeshObject;
 }
 [CreateAssetMenu(fileName = "StageData", menuName = "Scriptable Objects/StageData")]

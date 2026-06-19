@@ -135,7 +135,7 @@ public class GameManager : MonoBehaviour
             int roundDataIndex = infiniteRounds ? 0 : currentRound;
             TargetsManager.Instance.UpdateTargetCount(roundDataIndex);
             TargetsManager.Instance.SpawnAllTargets(roundDataIndex);
-            CoverManager.Instance.SetCoverMesh(currentStageData.roundTargetData[roundDataIndex].coverMeshObject);
+            CoverManager.Instance.SetCoverMesh(currentStageData.roundTargetData[roundDataIndex]);
             SetRoundState(ERounds.Running);
             currentRoundTime = 0f;
             roundIsRunning = true;
