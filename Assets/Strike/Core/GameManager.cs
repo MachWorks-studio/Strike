@@ -251,7 +251,24 @@ public class GameManager : MonoBehaviour
         return $"{hours:D2}:{minutes:D2}:{seconds:D2}:{centiseconds:D2}";
     }
 
-    public void QuitGame()
+    public void QuitGame(float delay = 0f)
+    {
+        if (delay > 0f)
+        {
+            StartCoroutine(QuitAfterDelay(delay));
+        }
+        else
+        {
+            ExecuteQuit();
+        }
+    }
+
+    private IEnumerator QuitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        ExecuteQuit();
+    }
+    private void ExecuteQuit()
     {
         #if UNITY_EDITOR
             UnityEditor.EditorApplication.isPlaying = false;

@@ -177,10 +177,13 @@ public class MenusUI : MonoBehaviour
                 break;
             case EButtonFunctions.Quit:
                 if (FadeManager.Instance != null)
+                {
                     FadeManager.Instance.FadeToBlack();
+                    GameManager.Instance.QuitGame(1f);
+                }
                 else
                 {
-                    GameManager.Instance.QuitGame();
+                    GameManager.Instance.QuitGame(0f);
                 }
                 break;
         }
