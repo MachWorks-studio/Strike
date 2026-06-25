@@ -12,17 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a18be788369574aa43a90028b763b7, type: 3}
   m_Name: Stage0_Data
   m_EditorClassIdentifier: Assembly-CSharp::StageData
-  infiniteRounds: 1
+  infiniteRounds: 0
   roundTargetData:
   - targetSelectionMode: 0
     specificTargetIndices: 
     randomTargetCount: 5
-    coverMeshObject: {fileID: 0}
-  - targetSelectionMode: 1
-    specificTargetIndices: 03000000
-    randomTargetCount: 5
+    coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 060000000a000000
+    specificTargetIndices: 07000000
     randomTargetCount: 5
-    coverMeshObject: {fileID: 919132149155446097, guid: b653e421ddb1c6840add5471c9da0701, type: 3}
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 1500000017000000
+    randomTargetCount: 5
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 1500000017000000
+    randomTargetCount: 5
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}

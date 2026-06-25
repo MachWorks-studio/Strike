@@ -2,6 +2,8 @@ using UnityEngine;
 
 public class MenusUI : MonoBehaviour
 {
+    [SerializeField] private bool startInInitialMenu = false;
+    [SerializeField] private GameObject initialMenu;
     [SerializeField] private GameObject mainMenu;
     [SerializeField] private GameObject stageSelectMenu;
     [SerializeField] private GameObject circuitMenu;
@@ -22,10 +24,20 @@ public class MenusUI : MonoBehaviour
     void Awake()
     {
 		menuAudioSource = GetComponent<AudioSource>();
-        currentMenu = mainMenu;
         parentMenu = null;
         ingameEndRoundButton.SetActive(false);
-        ToggleMainMenuVisibility(true);
+        if (startInInitialMenu)
+        {
+            currentMenu = initialMenu;
+            ToggleInitialMenuVisibility(true);
+            ToggleMainMenuVisibility(false);
+        }
+        else
+        {
+            currentMenu = mainMenu;
+            ToggleMainMenuVisibility(true);
+            ToggleInitialMenuVisibility(false);
+        }
         ToggleEnterStageSelectMenuVisibility(false);
         ToggleSettingsMenuVisibility(false);
         ToggleCircuitMenuVisibility(false);
@@ -71,6 +83,7 @@ public class MenusUI : MonoBehaviour
     
     //--- Toggle Menu Visibility ---
     public void ToggleCurrentMenuVisibility(bool visible) => currentMenu.SetActive(visible);
+    public void ToggleInitialMenuVisibility(bool visible) => initialMenu.SetActive(visible);
     public void ToggleMainMenuVisibility(bool visible) => mainMenu.SetActive(visible);
     public void ToggleEnterStageSelectMenuVisibility(bool visible) => stageSelectMenu.SetActive(visible);
     public void TogglePostCircuitMenuVisibility(bool visible) => postCircuitMenu.SetActive(visible);
@@ -134,6 +147,7 @@ public class MenusUI : MonoBehaviour
 
     public void HideAllMenus()
     {
+        ToggleInitialMenuVisibility(false);
         ToggleMainMenuVisibility(false);
         ToggleEnterStageSelectMenuVisibility(false);
         ToggleSettingsMenuVisibility(false);
@@ -150,14 +164,14 @@ public class MenusUI : MonoBehaviour
         ingameEndRoundButton.SetActive(true);
     }
    //--- Settings Menu ---
-    public void QuitGame()
+    public void QuitGame(GameObject menuOrigin)
     {
         PlayClickSound();
         ToggleCurrentMenuVisibility(false);
         ToggleConfirmationMenuVisibility(true);
         requestedButtonFunction = EButtonFunctions.Quit;
         currentMenu = confirmationMenu;
-        parentMenu = mainMenu;
+        parentMenu = menuOrigin;
     }
     
     //--- Stage Menu ---

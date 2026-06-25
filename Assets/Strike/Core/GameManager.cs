@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour
         {
             InitializeStage0();
         }
+        InitializeStageData(1);
 	}
 
     private void Update()

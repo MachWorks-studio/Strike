@@ -1,7 +1,10 @@
 using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using TMPro;
 
+[ExecuteInEditMode]
 public class TargetsManager : MonoBehaviour
 {
     public static TargetsManager Instance { get; private set; }
@@ -16,6 +19,66 @@ public class TargetsManager : MonoBehaviour
     
     private Coroutine _waitForNextRoundCoroutine;
 
+#if UNITY_EDITOR
+    private List<GameObject> _spawnLabels = new List<GameObject>();
+    void OnEnable()
+    {
+        ShowTargetNumber();
+        UnityEditor.EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+    }
+
+    void OnDisable()
+    {
+        ClearSpawnLabels();
+        UnityEditor.EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+    }
+
+    private void OnPlayModeStateChanged(UnityEditor.PlayModeStateChange state)
+    {
+        if (state == UnityEditor.PlayModeStateChange.ExitingPlayMode)
+            ClearSpawnLabels();
+    }
+
+    private void ShowTargetNumber()
+    {
+        if (Application.isPlaying) return;
+        ClearSpawnLabels();
+        if (spawnPoints == null) return;
+        
+        for (int i = 0; i < spawnPoints.Length; i++)
+        {
+            GameObject labelObj = new GameObject("__SpawnLabel_" + i);
+            labelObj.transform.position = spawnPoints[i].position + Vector3.up * 0.2f;
+
+            TextMeshPro tmp = labelObj.AddComponent<TextMeshPro>();
+            tmp.font = TMP_Settings.defaultFontAsset;
+            tmp.text = i.ToString();
+            tmp.fontSize = 3f;
+            tmp.alignment = TextAlignmentOptions.Center;
+            tmp.color = Color.white;
+            tmp.rectTransform.sizeDelta = new Vector2(5f, 5f);
+            
+            _spawnLabels.Add(labelObj);
+        }
+    }
+
+    private void ClearSpawnLabels()
+    {
+        foreach (var label in _spawnLabels)
+        {
+            if (label != null)
+                DestroyImmediate(label);
+        }
+
+        _spawnLabels.Clear();
+        
+        // For deleting target labels by name
+        var orphans = GameObject.FindObjectsByType<GameObject>(FindObjectsSortMode.None)
+            .Where(go => go.name.StartsWith("__SpawnLabel_"));
+        foreach (var orphan in orphans)
+            DestroyImmediate(orphan);
+    }
+#endif
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -24,6 +87,11 @@ public class TargetsManager : MonoBehaviour
             return;
         }
         Instance = this;
+        
+        #if UNITY_EDITOR
+            if (Application.isPlaying)
+                ClearSpawnLabels();
+        #endif
     }
 
     public void InitializeRoundTargetData(RoundTargetData[] data)
@@ -31,6 +99,7 @@ public class TargetsManager : MonoBehaviour
         currentRoundTargetData = data;
     }
 
+    
     public void UpdateTargetCount(int roundNumber)
     {
         RoundTargetData roundData = currentRoundTargetData[roundNumber];
