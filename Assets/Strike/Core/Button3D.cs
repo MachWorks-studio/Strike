@@ -16,7 +16,7 @@ public class Button3D : MonoBehaviour, IDamageable
                 Debug.Log("Default, nothing implemented");
                 break;
             case EButtonFunctions.StartRound:
-                GameManager.Instance.StartCircuit();
+                GameManager.Instance.StartCircuit(true);
                 break;
             case EButtonFunctions.EndRound:
                 GameManager.Instance.EndCircuit();

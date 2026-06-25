@@ -7,12 +7,14 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
+	[SerializeField] private bool playStage0Immediately = false;
     [SerializeField] private AudioClip roundStartAudioClip;
     [SerializeField] private AudioClip roundEndAudioClip;
     [SerializeField] private AudioClip circuitStartAudioClip;
     [SerializeField] private AudioClip circuitEndAudioClip;
     [SerializeField] private AudioClip countDownAudioClip;
     private AudioSource audioSourceGameManager;
+    [SerializeField] private MenusUI menusUI;
     [SerializeField] private TMP_Text currentRoundTimeText;
 	[SerializeField] private TMP_Text allRoundTimesInCircuitText;
     [SerializeField] private TMP_Text countDownText;
@@ -46,6 +48,14 @@ public class GameManager : MonoBehaviour
         audioSourceGameManager = gameObject.GetComponent<AudioSource>();
     }
 
+	void Start()
+	{
+        if (playStage0Immediately)
+        {
+            InitializeStage0();
+        }
+	}
+
     private void Update()
     {
         if (!roundIsRunning) return;
@@ -54,6 +64,24 @@ public class GameManager : MonoBehaviour
         UpdateRoundTimesText();
     }
 
+    private void InitializeStage0()
+    {
+        menusUI.gameObject.SetActive(false);
+        allRoundTimesInCircuitText.gameObject.SetActive(false);
+        currentRoundTimeText.gameObject.SetActive(false);
+        InitializeStageData(0);
+        StartCoroutine(Stage0CountDown());
+    }
+    private void PlayStage0()
+    {
+        StartCircuit(false);
+    }
+
+    IEnumerator Stage0CountDown()
+    {
+        yield return new WaitForSeconds(2f);
+        PlayStage0();
+    }
     public void InitializeStageData(int stageNumber)
     {
         currentStageData = stageData[stageNumber];
@@ -65,16 +93,24 @@ public class GameManager : MonoBehaviour
         else
             Debug.Log($"{currentStageData.roundTargetData.Length} Rounds in circuit");
     }
-    public void StartCircuit()
+    public void StartCircuit(bool showCountdown)
     {
         if (_countDownCoroutine == null)
         {
-            _countDownCoroutine = StartCoroutine(StartCircuitCountdown());
+            if (showCountdown)
+            {
+                _countDownCoroutine = StartCoroutine(StartCircuitCountdown());
+                countDownText.gameObject.SetActive(true);
+            }
+            else
+            {
+                StartRound();
+                countDownText.gameObject.SetActive(false);
+            }
             currentRound = 1;
             previousRoundTimes = new float []{ 0f };
             SetRoundState(ERounds.Paused);
             UpdateRoundTimesText();
-            countDownText.gameObject.SetActive(true);
             OnStartCircuit?.Invoke();
         }
     }

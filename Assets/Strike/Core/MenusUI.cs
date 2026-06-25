@@ -145,7 +145,7 @@ public class MenusUI : MonoBehaviour
     public void StartCircuit()
     {
         PlayClickSound();
-        GameManager.Instance.StartCircuit();
+        GameManager.Instance.StartCircuit(true);
         HideAllMenus();
         ingameEndRoundButton.SetActive(true);
     }

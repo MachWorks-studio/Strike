@@ -1026,11 +1026,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738dab91a83f6a841ad0e426a9003eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  playStage0Immediately: 1
   roundStartAudioClip: {fileID: 8300000, guid: aab6a9ede7d1fa148acf8592d5dc5e77, type: 3}
   roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
   circuitStartAudioClip: {fileID: 8300000, guid: d4f317c5812c6d34c9dd116f70c78fa1, type: 3}
   circuitEndAudioClip: {fileID: 8300000, guid: b0b4e17e9dffc0d4398d8b7f43fead92, type: 3}
   countDownAudioClip: {fileID: 8300000, guid: f262b93e2f8b72e45a30a7653a2451cd, type: 3}
+  menusUI: {fileID: 1969673374}
   currentRoundTimeText: {fileID: 1549729566}
   allRoundTimesInCircuitText: {fileID: 348869186}
   countDownText: {fileID: 656934869}
@@ -6433,6 +6435,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
   m_PrefabInstance: {fileID: 8853088676289162053}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1969673374 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3421948590711376262, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
+  m_PrefabInstance: {fileID: 8853088676289162053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 14dc874c92b80ba4cbd33c452c16e627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MenusUI
 --- !u!1001 &1974803304
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6563,6 +6576,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: StrikeEnvironment
       objectReference: {fileID: 0}
+    - target: {fileID: 3967493562214342286, guid: 1abb80aaeeb767343b0243dfc63363c9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 30574ce741607174d92bf51f90bb3fd6, type: 2}
+    - target: {fileID: 4951922589026138617, guid: 1abb80aaeeb767343b0243dfc63363c9, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: d6cb8960916e575489ff76ba918f94dc, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
