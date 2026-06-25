@@ -17,12 +17,25 @@ MonoBehaviour:
   - targetSelectionMode: 0
     specificTargetIndices: 
     randomTargetCount: 5
+    coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 0200000004000000
+    specificTargetIndices: 07000000
     randomTargetCount: 0
+    coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 0b00000013000000
+    specificTargetIndices: 100000001c000000
     randomTargetCount: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: b653e421ddb1c6840add5471c9da0701, type: 3}
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 230000001a00000017000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 2d000000200000003b0000001a000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 81c42b1aa3ecd304abc11f95c25ddd1b, type: 3}

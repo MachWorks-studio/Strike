@@ -17,16 +17,25 @@ MonoBehaviour:
   - targetSelectionMode: 0
     specificTargetIndices: 
     randomTargetCount: 0
+    coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 1e0000002300000028000000
+    specificTargetIndices: 1a0000001500000010000000
     randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: e71a0327d04009c42974b9955513c6ae, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 2b0000002c0000002600000027000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 1b119400f9f65794d82168a36d59e7fc, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 1a000000150000002b00000026000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: e35f59af9ab6bf4408e8d88ce23768ab, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 28000000320000003c000000
+    specificTargetIndices: 4100000042000000430000004400000045000000
     randomTargetCount: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 469448d1677a2ec49b2a5fcec044a84e, type: 3}
-  - targetSelectionMode: 1
-    specificTargetIndices: 370000003e00000045000000
-    randomTargetCount: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: e4ad4e2acea69d74d96ef831b8d3cbbb, type: 3}
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 2921097394934894b91280b69d098cdb, type: 3}
