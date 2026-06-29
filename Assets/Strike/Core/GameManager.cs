@@ -7,7 +7,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
     
-	[SerializeField] private bool playStage0Immediately = false;
     [SerializeField] private AudioClip roundStartAudioClip;
     [SerializeField] private AudioClip roundEndAudioClip;
     [SerializeField] private AudioClip circuitStartAudioClip;
@@ -22,6 +21,7 @@ public class GameManager : MonoBehaviour
     public bool infiniteRounds = false;
     public int roundsInCircuit = 5;
     public int currentRound = 1;
+    public string currentRoundTimesStringText;
     [SerializeField] private StageData[] stageData;
 	private StageData currentStageData;
     [SerializeField] private ERounds currentRoundState = ERounds.Completed;
@@ -50,11 +50,9 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
-        if (playStage0Immediately)
-        {
-            InitializeStage0();
-        }
         InitializeStageData(1);
+        allRoundTimesInCircuitText.gameObject.SetActive(false);
+        currentRoundTimeText.gameObject.SetActive(false);
 	}
 
     private void Update()
@@ -108,7 +106,9 @@ public class GameManager : MonoBehaviour
                 StartRound();
                 countDownText.gameObject.SetActive(false);
             }
+            currentRoundTimeText.gameObject.SetActive(true);
             currentRound = 1;
+            currentRoundTime = 0;
             previousRoundTimes = new float []{ 0f };
             SetRoundState(ERounds.Paused);
             UpdateRoundTimesText();
@@ -169,6 +169,7 @@ public class GameManager : MonoBehaviour
                 audioSourceGameManager.PlayOneShot(roundStartAudioClip);
             }
 
+            allRoundTimesInCircuitText.gameObject.SetActive(true);
             int roundDataIndex = infiniteRounds ? 0 : currentRound;
             TargetsManager.Instance.UpdateTargetCount(roundDataIndex);
             TargetsManager.Instance.SpawnAllTargets(roundDataIndex);
@@ -198,6 +199,8 @@ public class GameManager : MonoBehaviour
         {
             SetRoundState(ERounds.Completed);
             OnEndCircuit();
+            allRoundTimesInCircuitText.gameObject.SetActive(false);
+            currentRoundTimeText.gameObject.SetActive(false);
             audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
             StopCountDown();
         }
@@ -275,6 +278,7 @@ public class GameManager : MonoBehaviour
         {
             roundTimesString.AppendLine($"\nTotal: {FormatTime(totalTime)}");
         }
+        currentRoundTimesStringText = roundTimesString.ToString();
         allRoundTimesInCircuitText.text = roundTimesString.ToString();
     }
 

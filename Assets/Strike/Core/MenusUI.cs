@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class MenusUI : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class MenusUI : MonoBehaviour
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject confirmationMenu;
     [Header("Menu Backend")]
+    [SerializeField] private TMP_Text roundTimesText;
     [SerializeField] private GameObject currentMenu;
     [SerializeField] private GameObject parentMenu;
     [Header("Game Object References")]
@@ -41,6 +43,7 @@ public class MenusUI : MonoBehaviour
         ToggleEnterStageSelectMenuVisibility(false);
         ToggleSettingsMenuVisibility(false);
         ToggleCircuitMenuVisibility(false);
+        TogglePostCircuitMenuVisibility(false);
         ToggleConfirmationMenuVisibility(false);
     }
 
@@ -69,6 +72,7 @@ public class MenusUI : MonoBehaviour
         EnterPostCircuitMenu();
         Debug.Log("Circuit Complete");
         ingameEndRoundButton.SetActive(false);
+        SetRoundTimesText();
     }
 
     private void HandleFadeComplete()
@@ -152,6 +156,7 @@ public class MenusUI : MonoBehaviour
         ToggleEnterStageSelectMenuVisibility(false);
         ToggleSettingsMenuVisibility(false);
         ToggleCircuitMenuVisibility(false);
+        TogglePostCircuitMenuVisibility(false);
         ToggleConfirmationMenuVisibility(false);
     }
     
@@ -204,4 +209,9 @@ public class MenusUI : MonoBehaviour
     }
     public void PlayHoverSound() => menuAudioSource.PlayOneShot(hoverSound);
     public void PlayClickSound() => menuAudioSource.PlayOneShot(clickSound);
+
+    private void SetRoundTimesText()
+    {
+        roundTimesText.SetText(GameManager.Instance.currentRoundTimesStringText);
+    }
 }
