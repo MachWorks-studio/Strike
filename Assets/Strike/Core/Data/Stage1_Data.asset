@@ -33,9 +33,9 @@ MonoBehaviour:
     specificTargetIndices: 21000000100000001700000006000000
     randomTargetCount: 0
     coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
+    coverMeshObject: {fileID: 919132149155446097, guid: e71a0327d04009c42974b9955513c6ae, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 2d000000200000003b00000012000000
     randomTargetCount: 0
     coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 81c42b1aa3ecd304abc11f95c25ddd1b, type: 3}
+    coverMeshObject: {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}

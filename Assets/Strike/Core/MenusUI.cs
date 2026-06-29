@@ -11,8 +11,10 @@ public class MenusUI : MonoBehaviour
     [SerializeField] private GameObject postCircuitMenu;
     [SerializeField] private GameObject settingsMenu;
     [SerializeField] private GameObject confirmationMenu;
+    [SerializeField] private int targetStage;
     [Header("Menu Backend")]
     [SerializeField] private TMP_Text roundTimesText;
+    [SerializeField] private TMP_Text stageTitleText;
     [SerializeField] private GameObject currentMenu;
     [SerializeField] private GameObject parentMenu;
     [Header("Game Object References")]
@@ -96,6 +98,14 @@ public class MenusUI : MonoBehaviour
     public void ToggleConfirmationMenuVisibility(bool visible) => confirmationMenu.SetActive(visible);
     
     // Button Functionalities for going to menus
+    public void EnterMainMenu()
+    {
+        PlayClickSound();
+        ToggleCurrentMenuVisibility(false);
+        ToggleMainMenuVisibility(true);
+        currentMenu = mainMenu;
+        parentMenu = null;
+    }
     public void GoBackMenu()
     {
         PlayClickSound();
@@ -182,7 +192,8 @@ public class MenusUI : MonoBehaviour
     //--- Stage Menu ---
     public void SelectStage(int stage)
     {
-        int targetStage = stage;
+        targetStage = stage;
+        stageTitleText.text = $"Stage {stage}";
         GameManager.Instance.InitializeStageData(targetStage);
         EnterCircuitMenu();
     }
