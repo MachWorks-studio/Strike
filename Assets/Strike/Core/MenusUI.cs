@@ -46,7 +46,7 @@ public class MenusUI : MonoBehaviour
 
     void Start()
     {
-        FadeManager.Instance.FadeFromBlack();
+        //FadeManager.Instance.FadeFromBlack();
     }
     //--- Event Bindings ---
     private void OnEnable()
