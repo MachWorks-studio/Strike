@@ -1084,7 +1084,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738dab91a83f6a841ad0e426a9003eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  playStage0Immediately: 0
   roundStartAudioClip: {fileID: 8300000, guid: aab6a9ede7d1fa148acf8592d5dc5e77, type: 3}
   roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
   circuitStartAudioClip: {fileID: 8300000, guid: d4f317c5812c6d34c9dd116f70c78fa1, type: 3}
@@ -1094,9 +1093,11 @@ MonoBehaviour:
   currentRoundTimeText: {fileID: 1549729566}
   allRoundTimesInCircuitText: {fileID: 348869186}
   countDownText: {fileID: 656934869}
+  previousCircuitTimesText: {fileID: 972402572}
   infiniteRounds: 0
   roundsInCircuit: 5
   currentRound: 1
+  currentRoundTimesStringText: 
   stageData:
   - {fileID: 11400000, guid: 5237f0e075e615f498d74167dae16aac, type: 2}
   - {fileID: 11400000, guid: 86355e1c9c7b10e4ab7301a2a8e26838, type: 2}
@@ -1107,6 +1108,7 @@ MonoBehaviour:
   currentRoundTime: 0
   previousRoundTimes:
   - 0
+  circuitSavedData: []
 --- !u!82 &252505898
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3419,6 +3421,17 @@ MonoBehaviour:
   m_ShadowLayerMask: 1
   m_RenderingLayers: 1
   m_ShadowRenderingLayers: 1
+--- !u!114 &972402572 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1891378474578823444, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
+  m_PrefabInstance: {fileID: 8853088676289162053}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TextMeshProUGUI
 --- !u!1 &973041907
 GameObject:
   m_ObjectHideFlags: 0
@@ -5240,7 +5253,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Round 0
 
-    Time Elapsed: 00:00:00'
+    00:00:00'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: c3cbb711edadfdc4187f49026ef07020, type: 2}
   m_sharedMaterial: {fileID: 250593482386334547, guid: c3cbb711edadfdc4187f49026ef07020, type: 2}
@@ -7325,7 +7338,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 3.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 7703218305467465638, guid: 5fd1b3a809de9ad49acb95ba21313a56, type: 3}
       propertyPath: m_LocalRotation.w

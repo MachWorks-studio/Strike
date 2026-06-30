@@ -15,6 +15,7 @@ public class MenusUI : MonoBehaviour
     [Header("Menu Backend")]
     [SerializeField] private TMP_Text roundTimesText;
     [SerializeField] private TMP_Text stageTitleText;
+    [SerializeField] private TMP_Text[] previousCircuitTimesText;
     [SerializeField] private GameObject currentMenu;
     [SerializeField] private GameObject parentMenu;
     [Header("Game Object References")]
@@ -195,6 +196,7 @@ public class MenusUI : MonoBehaviour
         targetStage = stage;
         stageTitleText.text = $"Stage {stage}";
         GameManager.Instance.InitializeStageData(targetStage);
+        SetCircuitTimesText(false);
         EnterCircuitMenu();
     }
 
@@ -224,5 +226,42 @@ public class MenusUI : MonoBehaviour
     private void SetRoundTimesText()
     {
         roundTimesText.SetText(GameManager.Instance.currentRoundTimesStringText);
+    }
+
+    public void SetCircuitTimesText(bool showCurrentTime = true)
+    {
+        CircuitSavedData data = GameManager.Instance.CurrentCircuitData;
+
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        if (showCurrentTime)
+        {
+            sb.AppendLine($"Current Time\n{GameManager.Instance.FormatTime(GameManager.Instance.lastCircuitTime)}\n");
+        }
+        sb.AppendLine("Best Times\n");
+
+        int count = Mathf.Min(10, data.circuitTimes.Count);
+        for (int i = 0; i < count; i++)
+        {
+            sb.AppendLine($"{Ordinal(i + 1)} - {GameManager.Instance.FormatTime(data.circuitTimes[i])}");
+        }
+
+        string text = sb.ToString();
+        foreach (TMP_Text text_ in previousCircuitTimesText)
+        {
+            text_.SetText(text);
+            text_.gameObject.SetActive(true);
+        }
+    }
+
+    private string Ordinal(int n)
+    {
+        if (n % 100 is 11 or 12 or 13) return $"{n}th";
+        return (n % 10) switch
+        {
+            1 => $"{n}st",
+            2 => $"{n}nd",
+            3 => $"{n}rd",
+            _ => $"{n}th"
+        };
     }
 }

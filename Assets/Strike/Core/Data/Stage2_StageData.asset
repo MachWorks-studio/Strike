@@ -10,32 +10,33 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b4a18be788369574aa43a90028b763b7, type: 3}
-  m_Name: Stage1_Data
+  m_Name: Stage2_StageData
   m_EditorClassIdentifier: Assembly-CSharp::StageData
   infiniteRounds: 0
   roundTargetData:
   - targetSelectionMode: 0
     specificTargetIndices: 
-    randomTargetCount: 5
-    coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
-  - targetSelectionMode: 1
-    specificTargetIndices: 060000000700000008000000
     randomTargetCount: 0
     coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 100000001c0000001400000018000000
-    randomTargetCount: 0
-    coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
-  - targetSelectionMode: 1
-    specificTargetIndices: 21000000100000001700000006000000
+    specificTargetIndices: 1a0000001500000010000000
     randomTargetCount: 0
     coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: e71a0327d04009c42974b9955513c6ae, type: 3}
   - targetSelectionMode: 1
-    specificTargetIndices: 2d000000200000003b00000012000000
+    specificTargetIndices: 2b0000002c0000002600000027000000
     randomTargetCount: 0
     coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
+    coverMeshObject: {fileID: 919132149155446097, guid: 1b119400f9f65794d82168a36d59e7fc, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 1a000000150000002b00000026000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: e35f59af9ab6bf4408e8d88ce23768ab, type: 3}
+  - targetSelectionMode: 1
+    specificTargetIndices: 4100000042000000430000004400000045000000
+    randomTargetCount: 0
+    coverSelectionMode: 0
+    coverMeshObject: {fileID: 919132149155446097, guid: 2921097394934894b91280b69d098cdb, type: 3}
+  circuitSavedData: {fileID: 11400000, guid: 9f8598f8a680e0d48a7919d91ff9ebb3, type: 2}

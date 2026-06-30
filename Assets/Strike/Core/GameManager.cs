@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TMP_Text currentRoundTimeText;
 	[SerializeField] private TMP_Text allRoundTimesInCircuitText;
     [SerializeField] private TMP_Text countDownText;
+    [SerializeField] private TMP_Text previousCircuitTimesText;
 
     public bool infiniteRounds = false;
     public int roundsInCircuit = 5;
@@ -24,10 +26,12 @@ public class GameManager : MonoBehaviour
     public string currentRoundTimesStringText;
     [SerializeField] private StageData[] stageData;
 	private StageData currentStageData;
+    public CircuitSavedData CurrentCircuitData => currentStageData.circuitSavedData;
     [SerializeField] private ERounds currentRoundState = ERounds.Completed;
     [SerializeField] private float currentRoundTime;
     [SerializeField] private float[] previousRoundTimes = { 0f };
-    
+    public float lastCircuitTime {  get; private set; }
+    public float lastCircuitBestTime {  get; private set; }
     private bool roundIsRunning;
     private Coroutine _countDownCoroutine;
     
@@ -145,8 +149,6 @@ public class GameManager : MonoBehaviour
             EndRound();
             currentRound = 1;
             SetRoundState(ERounds.Completed);
-            audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
-            UpdateCurrentCircuitTimesText();
             countDownText.gameObject.SetActive(false);
             OnEndCircuit?.Invoke();
         }
@@ -185,7 +187,6 @@ public class GameManager : MonoBehaviour
             {
                 TargetsManager.Instance.SetContinueToNextRound(true);
             }
-            UpdateCurrentCircuitTimesText();
         }
         OnStartRound?.Invoke();
     }
@@ -258,7 +259,7 @@ public class GameManager : MonoBehaviour
         {
             currentRoundTextStringBuilder.Append($"/{roundsInCircuit}");
         }
-        currentRoundTextStringBuilder.AppendLine($"\nTime: {FormatTime(currentRoundTime)}");
+        currentRoundTextStringBuilder.AppendLine($"\n{FormatTime(currentRoundTime)}");
         currentRoundTimeText.text = currentRoundTextStringBuilder.ToString();
     }
 
@@ -271,25 +272,45 @@ public class GameManager : MonoBehaviour
         for (int i = 1; i < previousRoundTimes.Length; i++)
         {
             if (previousRoundTimes[i] == 0) break;
-            roundTimesString.AppendLine($"{i}: {FormatTime(previousRoundTimes[i])}");
+            roundTimesString.AppendLine($"{i} - {FormatTime(previousRoundTimes[i])}");
             totalTime += previousRoundTimes[i];
         }
         if (TargetsManager.Instance.willSpawnNextRound == false)
         {
-            roundTimesString.AppendLine($"\nTotal: {FormatTime(totalTime)}");
+            roundTimesString.AppendLine($"\nTotal - {FormatTime(totalTime)}");
+            SaveCircuitTime(totalTime);
         }
         currentRoundTimesStringText = roundTimesString.ToString();
         allRoundTimesInCircuitText.text = roundTimesString.ToString();
     }
-
-    string FormatTime(float time)
+    
+    private void SaveCircuitTime(float totalTime)
     {
-        int hours = (int)(time / 3600);
+        if (currentStageData.circuitSavedData == null)
+        {
+            Debug.LogWarning($"No matching CircuitSavedData for stage index {currentStageData.name}");
+            return;
+        }
+        
+        CircuitSavedData data = currentStageData.circuitSavedData;
+        data.AddTime(totalTime);
+
+        lastCircuitTime = totalTime;
+        lastCircuitBestTime = data.BestTime();
+        
+        menusUI.SetCircuitTimesText();
+
+        Debug.Log($"Saved circuit time {FormatTime(totalTime)} for {data.circuitName}. Best: {FormatTime(data.BestTime())}");
+    }
+
+    public string FormatTime(float time)
+    {
+        //int hours = (int)(time / 3600);
         int minutes = (int)(time % 3600 / 60);
         int seconds = (int)(time % 60);
         int centiseconds = (int)(time * 100 % 100);
         
-        return $"{hours:D2}:{minutes:D2}:{seconds:D2}:{centiseconds:D2}";
+        return $"{minutes:D2}:{seconds:D2}:{centiseconds:D2}";
     }
 
     public void QuitGame(float delay = 0f)
