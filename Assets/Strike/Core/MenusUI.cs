@@ -75,7 +75,10 @@ public class MenusUI : MonoBehaviour
         EnterPostCircuitMenu();
         Debug.Log("Circuit Complete");
         ingameEndRoundButton.SetActive(false);
-        SetRoundTimesText();
+        if (GameManager.Instance.CircuitEndedPrematurely)
+            roundTimesText.SetText("Circuit Ended Early");
+        else
+            SetRoundTimesText();
     }
 
     private void HandleFadeComplete()

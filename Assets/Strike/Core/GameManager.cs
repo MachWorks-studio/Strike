@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
     public float lastCircuitTime {  get; private set; }
     public float lastCircuitBestTime {  get; private set; }
     private bool roundIsRunning;
+    private bool circuitEndedPrematurely = false;
+    public bool CircuitEndedPrematurely => circuitEndedPrematurely;
     private Coroutine _countDownCoroutine;
     
     public static event System.Action OnStartCircuit;
@@ -54,6 +56,7 @@ public class GameManager : MonoBehaviour
 
 	void Start()
 	{
+        ResetCircuitTimesSavedData();
         InitializeStageData(1);
         allRoundTimesInCircuitText.gameObject.SetActive(false);
         currentRoundTimeText.gameObject.SetActive(false);
@@ -67,6 +70,14 @@ public class GameManager : MonoBehaviour
         UpdateRoundTimesText();
     }
 
+    private void ResetCircuitTimesSavedData()
+    {
+        foreach (StageData stage in stageData)
+        {
+            if (stage.circuitSavedData != null)
+                stage.circuitSavedData.circuitTimes.Clear();
+        }
+    }
     private void InitializeStage0()
     {
         menusUI.gameObject.SetActive(false);
@@ -143,6 +154,7 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(_countDownCoroutine);
                 _countDownCoroutine = null;
             }
+            circuitEndedPrematurely = true;
             TargetsManager.Instance.DespawnAllTargets();
             TargetsManager.Instance.SetContinueToNextRound(false);
             TargetsManager.Instance.StopWaitingForNextRound();
@@ -151,6 +163,7 @@ public class GameManager : MonoBehaviour
             SetRoundState(ERounds.Completed);
             countDownText.gameObject.SetActive(false);
             OnEndCircuit?.Invoke();
+            circuitEndedPrematurely = false;
         }
     }
     public void SetRoundState(ERounds state)
@@ -286,6 +299,12 @@ public class GameManager : MonoBehaviour
     
     private void SaveCircuitTime(float totalTime)
     {
+        if (circuitEndedPrematurely)
+        {
+            Debug.Log("Circuit Ended Prematurely");
+            menusUI.SetCircuitTimesText(false);
+            return;
+        }
         if (currentStageData.circuitSavedData == null)
         {
             Debug.LogWarning($"No matching CircuitSavedData for stage index {currentStageData.name}");
