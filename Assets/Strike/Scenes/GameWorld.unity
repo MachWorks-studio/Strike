@@ -1108,7 +1108,6 @@ MonoBehaviour:
   currentRoundTime: 0
   previousRoundTimes:
   - 0
-  circuitSavedData: []
 --- !u!82 &252505898
 AudioSource:
   m_ObjectHideFlags: 0
@@ -5999,6 +5998,9 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
   - {fileID: 919132149155446097, guid: 2921097394934894b91280b69d098cdb, type: 3}
   - {fileID: 919132149155446097, guid: fe5321e670070f4448276f816bb9bf73, type: 3}
+  riseDuration: 0.2
+  edgeWidth: 0.2
+  edgeOvershoot: 0.5
 --- !u!1001 &1798754711
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6403,6 +6405,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b81619e5ee5c16b429f3c8d431167798, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 23c47d79bf2b68a4082b2d0b396e156b, type: 2}
     - target: {fileID: -5754084199372789682, guid: b81619e5ee5c16b429f3c8d431167798, type: 3}
       propertyPath: m_Mesh
       value: 
