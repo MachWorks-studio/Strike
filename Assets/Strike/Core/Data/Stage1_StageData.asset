@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a18be788369574aa43a90028b763b7, type: 3}
   m_Name: Stage1_StageData
   m_EditorClassIdentifier: Assembly-CSharp::StageData
+  circuitSavedData: {fileID: 11400000, guid: 1fe34a6b3a5c75c438690afd74086219, type: 2}
   infiniteRounds: 0
   roundTargetData:
   - targetSelectionMode: 0
@@ -28,15 +29,14 @@ MonoBehaviour:
     specificTargetIndices: 100000001c0000001400000018000000
     randomTargetCount: 0
     coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: 46a62f2b77e0ad248841c917f47f6ea0, type: 3}
+    coverMeshObject: {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 21000000100000001700000006000000
     randomTargetCount: 0
     coverSelectionMode: 0
-    coverMeshObject: {fileID: 919132149155446097, guid: e71a0327d04009c42974b9955513c6ae, type: 3}
+    coverMeshObject: {fileID: 919132149155446097, guid: 60c6687906704984a9be661e952d6767, type: 3}
   - targetSelectionMode: 1
     specificTargetIndices: 2d000000200000003b00000012000000
     randomTargetCount: 0
     coverSelectionMode: 0
     coverMeshObject: {fileID: 919132149155446097, guid: f639bcdd27c2d20478ee762d1a8c97e5, type: 3}
-  circuitSavedData: {fileID: 11400000, guid: 1fe34a6b3a5c75c438690afd74086219, type: 2}

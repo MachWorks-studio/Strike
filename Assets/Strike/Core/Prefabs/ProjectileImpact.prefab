@@ -4942,7 +4942,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ProjectileImpact
   targetImpactSound: {fileID: 8300000, guid: bbd34dc8756b1ca48b3c4e7bb1e79c0d, type: 3}
-  defaultImpactSound: {fileID: 8300000, guid: 2bf1e5ae159fa634e820eef0cc1d5692, type: 3}
+  defaultImpactSound:
+  - {fileID: 8300000, guid: 2bf1e5ae159fa634e820eef0cc1d5692, type: 3}
+  - {fileID: 8300000, guid: 21f904894a4308d478dd1abb2426fac7, type: 3}
+  - {fileID: 8300000, guid: 540d167cb588bfd4a98b007508dfc1f4, type: 3}
+  - {fileID: 8300000, guid: 52bf747211527b947af567e204d212a6, type: 3}
   buttonImpactSound: {fileID: 8300000, guid: 0648ad67a7de2954fb5dec7cc527e141, type: 3}
 --- !u!82 &2285301104615348487
 AudioSource:
@@ -4957,7 +4961,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 2bf1e5ae159fa634e820eef0cc1d5692, type: 3}
   m_PlayOnAwake: 0
-  m_Volume: 1
+  m_Volume: 0.8
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -4965,7 +4969,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 5
+  MinDistance: 2
   MaxDistance: 100
   Pan2D: 0
   rolloffMode: 0

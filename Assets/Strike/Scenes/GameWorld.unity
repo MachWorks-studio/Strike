@@ -1084,10 +1084,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 738dab91a83f6a841ad0e426a9003eb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
-  roundStartAudioClip: {fileID: 8300000, guid: aab6a9ede7d1fa148acf8592d5dc5e77, type: 3}
-  roundEndAudioClip: {fileID: 8300000, guid: 7a597165ea87f3b4db96e6f8b9aa1dd1, type: 3}
+  roundStartAudioClip: {fileID: 8300000, guid: 6054586ea8a1fd44fb1533aaadf23fc7, type: 3}
+  roundEndAudioClip: {fileID: 8300000, guid: 2979c186349c0be43bebe7a01305e2e9, type: 3}
   circuitStartAudioClip: {fileID: 8300000, guid: d4f317c5812c6d34c9dd116f70c78fa1, type: 3}
-  circuitEndAudioClip: {fileID: 8300000, guid: b0b4e17e9dffc0d4398d8b7f43fead92, type: 3}
+  circuitEndAudioClip: {fileID: 8300000, guid: b205103789ff19246be58e8375744bfa, type: 3}
   countDownAudioClip: {fileID: 8300000, guid: f262b93e2f8b72e45a30a7653a2451cd, type: 3}
   menusUI: {fileID: 1969673374}
   currentRoundTimeText: {fileID: 1549729566}
@@ -5998,7 +5998,7 @@ MonoBehaviour:
   - {fileID: 919132149155446097, guid: 575987ff8e417a545aacfde49bc98406, type: 3}
   - {fileID: 919132149155446097, guid: 2921097394934894b91280b69d098cdb, type: 3}
   - {fileID: 919132149155446097, guid: fe5321e670070f4448276f816bb9bf73, type: 3}
-  riseDuration: 0.2
+  riseDuration: 0.3
   edgeWidth: 0.2
   edgeOvershoot: 0.5
 --- !u!1001 &1798754711

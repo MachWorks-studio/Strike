@@ -3,7 +3,7 @@ using UnityEngine;
 public class ProjectileImpact : MonoBehaviour
 { 
     public AudioClip targetImpactSound;
-    public AudioClip defaultImpactSound;
+    public AudioClip[] defaultImpactSound;
     public AudioClip buttonImpactSound;
     private AudioSource audioSource;
     private ParticleSystem impactParticles;
@@ -23,7 +23,7 @@ public class ProjectileImpact : MonoBehaviour
         switch (type)
         {
             case ESurfaceType.Default:
-                audioSource.clip = defaultImpactSound;
+                audioSource.clip = GetRandomClip(defaultImpactSound);
                 break;
             case ESurfaceType.Target:
                 audioSource.clip = targetImpactSound;
@@ -33,5 +33,11 @@ public class ProjectileImpact : MonoBehaviour
                 break;
         }
         audioSource.Play();
+    }
+    
+    private AudioClip GetRandomClip(AudioClip[] clips)
+    {
+        if (clips == null || clips.Length == 0) return null;
+        return clips[Random.Range(0, clips.Length)];
     }
 }
