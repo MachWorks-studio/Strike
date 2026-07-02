@@ -7,7 +7,8 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
-    
+
+    [SerializeField] private GameObject currentPlayerPrefab;
     [SerializeField] private AudioClip roundStartAudioClip;
     [SerializeField] private AudioClip roundEndAudioClip;
     [SerializeField] private AudioClip circuitStartAudioClip;
@@ -70,6 +71,10 @@ public class GameManager : MonoBehaviour
         UpdateRoundTimesText();
     }
 
+    public void SetPlayerPrefab(GameObject playerPrefab)
+    {
+        currentPlayerPrefab = playerPrefab;
+    }
     private void ResetCircuitTimesSavedData()
     {
         foreach (StageData stage in stageData)
@@ -332,6 +337,17 @@ public class GameManager : MonoBehaviour
         return $"{minutes:D2}:{seconds:D2}:{centiseconds:D2}";
     }
 
+    public void SwitchHand()
+    {
+        if (currentPlayerPrefab.TryGetComponent<IPlayerController>(out var playerController))
+        {
+            playerController.SwitchHand();
+        }
+        else
+        {
+            Debug.LogWarning("Current player prefab does not implement IPlayerController");
+        }
+    }
     public void QuitGame(float delay = 0f)
     {
         if (delay > 0f)

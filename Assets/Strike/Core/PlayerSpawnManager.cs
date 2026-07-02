@@ -78,6 +78,7 @@ public class PlayerSpawnManager : MonoBehaviour
         
         Vector3 position = playerSpawnTransform != null ? playerSpawnTransform.position : Vector3.zero;
         Quaternion rotation = playerSpawnTransform != null ? playerSpawnTransform.rotation : Quaternion.identity;
-        Instantiate(playerPrefab, position, rotation);
+        GameObject player = Instantiate(playerPrefab, position, rotation);
+        GameManager.Instance.SetPlayerPrefab(player);
     }
 }

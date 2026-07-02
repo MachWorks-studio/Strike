@@ -544,6 +544,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   gun: {fileID: 4667206422236880653}
   vrCamera: {fileID: 273889791932472004}
+  gunTransform: {fileID: 7529015570659319123}
+  leftHandTransform: {fileID: 2619019316066899952}
+  rightHandTransform: {fileID: 9057421202521872660}
+  isRightHanded: 1
 --- !u!1 &6325288620814318794
 GameObject:
   m_ObjectHideFlags: 0

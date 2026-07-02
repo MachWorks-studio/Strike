@@ -223,6 +223,13 @@ public class MenusUI : MonoBehaviour
                 break;
         }
     }
+
+    public void SwitchHand()
+    {
+        PlayClickSound();
+        GameManager.Instance.SwitchHand();
+    }
+    
     public void PlayHoverSound() => menuAudioSource.PlayOneShot(hoverSound);
     public void PlayClickSound() => menuAudioSource.PlayOneShot(clickSound);
 

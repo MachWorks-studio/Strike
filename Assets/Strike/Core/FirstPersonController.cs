@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class FirstPersonController : MonoBehaviour
+public class FirstPersonController : MonoBehaviour, IPlayerController
 {
     [Header("Firearm")]
     [SerializeField] private GameObject firearm;
 
     [SerializeField] private Gun gun;
+    [SerializeField] private bool isRightHanded = true;
     [Header("Movement Speeds")]
     [SerializeField] private float moveSpeed = 3.0f;
     [SerializeField] private float sprintMultiplier = 2.0f;
@@ -31,6 +32,8 @@ public class FirstPersonController : MonoBehaviour
     private Vector3 currentMovement;
     private PlayerInput playerInput;
     private Vector3 defaultFirearmPosition;
+    private Vector3 rightHandedDefaultFirearmPosition;
+    private Vector3 leftHandedDefaultFirearmPosition;
     // Input Values
     private Vector2 playerMoveInput;
     private bool playerJumpInput;
@@ -47,6 +50,8 @@ public class FirstPersonController : MonoBehaviour
         targetHeight = mainCameraTransform.localPosition.y;
         currentHeight = mainCameraTransform.localPosition.y;
         defaultFirearmPosition = firearm.transform.localPosition;
+        rightHandedDefaultFirearmPosition = defaultFirearmPosition;
+        leftHandedDefaultFirearmPosition = new Vector3(-defaultFirearmPosition.x, defaultFirearmPosition.y, defaultFirearmPosition.z);
     }
 
     void Start()
@@ -171,5 +176,16 @@ public class FirstPersonController : MonoBehaviour
     void ApplyHeight(float height)
     {
         mainCameraTransform.localPosition = new Vector3(mainCameraTransform.localPosition.x, height, mainCameraTransform.localPosition.z);
+    }
+
+    public void SwitchHand()
+    {
+        isRightHanded = !isRightHanded;
+        gun.isRightHanded = isRightHanded;
+        defaultFirearmPosition = isRightHanded
+            ? rightHandedDefaultFirearmPosition
+            : leftHandedDefaultFirearmPosition;
+        
+        firearm.transform.localPosition = defaultFirearmPosition;
     }
 }

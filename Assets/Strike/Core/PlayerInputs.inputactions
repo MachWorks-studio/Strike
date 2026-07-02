@@ -247,6 +247,17 @@
                 },
                 {
                     "name": "",
+                    "id": "48ab2b38-dfb3-452f-b7f8-a5396339b0cb",
+                    "path": "<XRController>{LeftHand}/{PrimaryTrigger}",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "594bd5f2-3edc-459d-a4e5-d9480e6a27ab",
                     "path": "<Mouse>/scroll/y",
                     "interactions": "",

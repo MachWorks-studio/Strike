@@ -34,8 +34,10 @@ public class Gun : MonoBehaviour
     private ParticleSystem muzzleFlashParticles;
     private Animator gunAnimator;
     private Camera eventCamera;
+    public bool isRightHanded = true;
 
-    [SerializeField] private InputActionProperty VRShoot;
+    [SerializeField] private InputActionProperty VRShootRight;
+    [SerializeField] private InputActionProperty VRShootLeft;
     [SerializeField] private float hapticAmplitude = 0.1f;
     [SerializeField] private float hapticDuration = 0.02f;
     
@@ -43,14 +45,16 @@ public class Gun : MonoBehaviour
 
     void OnEnable()
     {
-        VRShoot.action.performed += OnVRShootPerformed;
+        VRShootRight.action.performed += OnVRShootRightPerformed;
+        VRShootLeft.action.performed += OnVRShootLeftPerformed;
         GameManager.OnStartCircuit += DisableLaser;
         GameManager.OnEndCircuit += EnableLaser;
     }
 
     void OnDisable()
     {
-        VRShoot.action.performed -= OnVRShootPerformed;
+        VRShootRight.action.performed -= OnVRShootRightPerformed;
+        VRShootLeft.action.performed -= OnVRShootLeftPerformed;
         GameManager.OnStartCircuit -= DisableLaser;
         GameManager.OnEndCircuit -= EnableLaser;
     }
@@ -78,9 +82,16 @@ public class Gun : MonoBehaviour
         if (laserEnabled)
             UpdateLaser();
     }
-    void OnVRShootPerformed(InputAction.CallbackContext context)
+    void OnVRShootRightPerformed(InputAction.CallbackContext context)
     {
-        Shoot();
+        if (isRightHanded)
+            Shoot();
+    }
+
+    void OnVRShootLeftPerformed(InputAction.CallbackContext context)
+    {
+        if (!isRightHanded)
+            Shoot();
     }
     //Shoot Input from FlatPlayer
     public void OnShoot()
@@ -91,7 +102,7 @@ public class Gun : MonoBehaviour
     private void Shoot()
     {
         // Haptic feedback for right VR controller on shoot
-        var vrController = VRShoot.action.activeControl;
+        var vrController = VRShootRight.action.activeControl;
         if (vrController?.device is UnityEngine.InputSystem.XR.XRControllerWithRumble rumbleController)
         {
             rumbleController.SendImpulse(hapticAmplitude, hapticDuration);

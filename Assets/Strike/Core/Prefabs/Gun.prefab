@@ -94,18 +94,31 @@ MonoBehaviour:
   laserHoverMaterial: {fileID: 2100000, guid: 886be9f0de168184f8f1b26bb36151de, type: 2}
   laserDecalDefaultMaterial: {fileID: 2100000, guid: c2a07e81c60d4384fb1ce4b6b3a2a680, type: 2}
   laserDecalHoverMaterial: {fileID: 2100000, guid: a80a04e2e3ff3a246836de17cc0e0302, type: 2}
-  VRShoot:
+  isRightHanded: 1
+  VRShootRight:
     m_UseReference: 1
     m_Action:
-      m_Name: VR Shoot
+      m_Name: VR Shoot Right
       m_Type: 0
       m_ExpectedControlType: 
-      m_Id: c3dd62d3-ebc4-4288-a3fb-afaa09578bc8
+      m_Id: 691552b0-2e42-4f7c-8fc4-942832e52da8
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings: []
       m_Flags: 0
     m_Reference: {fileID: 83097790271614945, guid: c348712bda248c246b8c49b3db54643f, type: 3}
+  VRShootLeft:
+    m_UseReference: 1
+    m_Action:
+      m_Name: VR Shoot Left
+      m_Type: 0
+      m_ExpectedControlType: 
+      m_Id: 6fe56d1c-3a59-4aae-a9df-b4b17492a4a2
+      m_Processors: 
+      m_Interactions: 
+      m_SingletonActionBindings: []
+      m_Flags: 0
+    m_Reference: {fileID: -5982496924579745919, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   hapticAmplitude: 0.1
   hapticDuration: 0.02
   bulletTracerSpawner: {fileID: 6906702333949596230}

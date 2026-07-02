@@ -74,6 +74,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FirstPersonController
   firearm: {fileID: 6330423882667914111}
   gun: {fileID: 3658228613396289088}
+  isRightHanded: 1
   moveSpeed: 3
   sprintMultiplier: 2
   walkSpeedMultiplier: 0.2
