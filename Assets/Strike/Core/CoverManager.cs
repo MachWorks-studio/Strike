@@ -12,16 +12,23 @@ public class CoverManager : MonoBehaviour
     [SerializeField] private float riseDuration = 0.2f;
     [SerializeField] private float edgeWidth = 0.2f;
     [SerializeField] private float edgeOvershoot = 0.5f;
+    [SerializeField] private GameObject intersectionShaderPlane;
     
     // Shader Setup
     private Renderer coverRenderer;
     private MaterialPropertyBlock propBlock;
-    private Coroutine activeEffectCoroutine;
+    private Coroutine activeCoverEffectCoroutine;
+    private Coroutine activeFieldEffectCoroutine;
     private float lastClipHeight;
 
     private static readonly int ClipHeightID = Shader.PropertyToID("_ClipHeight");
     private static readonly int EdgeWidthID = Shader.PropertyToID("_EdgeWidth");
+    
+    [SerializeField] private float fieldTravelDistance = 50f;
+    [SerializeField] private float fieldEffectDuration = 0.08f;
 
+    private Vector3 fieldStartLocalPos;
+    private Vector3 fieldEndLocalPos;
     public static CoverManager Instance {  get; private set; }
 
     private void OnEnable()
@@ -51,17 +58,22 @@ public class CoverManager : MonoBehaviour
         coverRenderer = cover.GetComponent<Renderer>();
         propBlock = new MaterialPropertyBlock();
         cover.gameObject.SetActive(false);
+        intersectionShaderPlane.SetActive(false);
+        
+        fieldStartLocalPos = intersectionShaderPlane.transform.localPosition;
+        fieldEndLocalPos = fieldStartLocalPos + Vector3.forward * fieldTravelDistance;
     }
 
     private void EnableCover()
     {
         cover.gameObject.SetActive(true);
-        StartEffect(AnimateClip(rising: true));
+        StartCoverShaderEffect(AnimateCoverEffect(rising: true));
+        StartFieldShaderEffect(AnimateFieldEffect(goingForward: true));
     }
     private void DisableCover()
     {
         if (!cover.gameObject.activeSelf) return;
-        StartEffect(AnimateClip(rising: false));
+        StartCoverShaderEffect(AnimateCoverEffect(rising: false));
     }
 
     public void SetCoverMesh(RoundTargetData roundData)
@@ -81,16 +93,17 @@ public class CoverManager : MonoBehaviour
         coverMeshCollider.sharedMesh = mesh;
     }
 
-    private void StartEffect(IEnumerator routine)
+    private void StartCoverShaderEffect(IEnumerator routine)
     {
-        if (activeEffectCoroutine != null)
+        if (activeCoverEffectCoroutine != null)
         {
-            StopCoroutine(activeEffectCoroutine);
+            StopCoroutine(activeCoverEffectCoroutine);
         }
-        activeEffectCoroutine = StartCoroutine(routine);
+        activeCoverEffectCoroutine = StartCoroutine(routine);
     }
+
     
-    private IEnumerator AnimateClip(bool rising)
+    private IEnumerator AnimateCoverEffect(bool rising)
     {
         Bounds bounds = coverRenderer.bounds;
         float startY = bounds.min.y - edgeOvershoot;
@@ -121,7 +134,7 @@ public class CoverManager : MonoBehaviour
             cover.gameObject.SetActive(false);
         }
 
-        activeEffectCoroutine = null;
+        activeCoverEffectCoroutine = null;
     }
     
     private void SetClipHeight(float height)
@@ -130,5 +143,34 @@ public class CoverManager : MonoBehaviour
         propBlock.SetFloat(ClipHeightID, height);
         coverRenderer.SetPropertyBlock(propBlock);
         lastClipHeight = height;
+    }
+    
+    private void StartFieldShaderEffect(IEnumerator routine)
+    {
+        if (activeFieldEffectCoroutine != null)
+        {
+            StopCoroutine(activeFieldEffectCoroutine);
+        }
+        activeFieldEffectCoroutine = StartCoroutine(routine);
+    }
+
+    private IEnumerator AnimateFieldEffect(bool goingForward)
+    {
+        Transform planeTransform = intersectionShaderPlane.transform;
+        planeTransform.localPosition = fieldStartLocalPos;
+        intersectionShaderPlane.SetActive(true);
+
+        float elapsed = 0f;
+        while (elapsed < fieldEffectDuration)
+        {
+            elapsed += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsed / fieldEffectDuration);
+            planeTransform.localPosition = Vector3.Lerp(fieldStartLocalPos, fieldEndLocalPos, t);
+            yield return null;
+        }
+
+        planeTransform.localPosition = fieldEndLocalPos;
+        intersectionShaderPlane.SetActive(false);
+        activeFieldEffectCoroutine = null;
     }
 }
