@@ -45,10 +45,15 @@ public class TargetsManager : MonoBehaviour
         ClearSpawnLabels();
         if (spawnPoints == null) return;
         
+        GameObject labelParent = new GameObject("---SPAWN LABELS---");
+        labelParent.hideFlags = HideFlags.DontSave;
+        _spawnLabels.Add(labelParent);
+        
         for (int i = 0; i < spawnPoints.Length; i++)
         {
             GameObject labelObj = new GameObject("__SpawnLabel_" + i);
             labelObj.hideFlags = HideFlags.DontSave;
+            labelObj.transform.SetParent(labelParent.transform);
             labelObj.transform.position = spawnPoints[i].position + Vector3.up * 0.2f;
 
             TextMeshPro tmp = labelObj.AddComponent<TextMeshPro>();
