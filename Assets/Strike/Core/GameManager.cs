@@ -37,6 +37,7 @@ public class GameManager : MonoBehaviour
     private bool circuitEndedPrematurely = false;
     public bool CircuitEndedPrematurely => circuitEndedPrematurely;
     private Coroutine _countDownCoroutine;
+    private Coroutine _finishCircuitCoroutine;
     
     public static event System.Action OnStartCircuit;
     public static event System.Action OnEndCircuit;
@@ -159,6 +160,11 @@ public class GameManager : MonoBehaviour
                 StopCoroutine(_countDownCoroutine);
                 _countDownCoroutine = null;
             }
+            if (_finishCircuitCoroutine != null)
+            {
+                StopCoroutine(_finishCircuitCoroutine);
+                _finishCircuitCoroutine = null;
+            }
             circuitEndedPrematurely = true;
             TargetsManager.Instance.DespawnAllTargets();
             TargetsManager.Instance.SetContinueToNextRound(false);
@@ -171,6 +177,20 @@ public class GameManager : MonoBehaviour
             circuitEndedPrematurely = false;
         }
     }
+    
+    private IEnumerator FinishCircuitAfterDelay(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        
+        _finishCircuitCoroutine = null;
+        SetRoundState(ERounds.Completed);
+        OnEndCircuit?.Invoke();
+        allRoundTimesInCircuitText.gameObject.SetActive(false);
+        currentRoundTimeText.gameObject.SetActive(false);
+        audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
+        StopCountDown();
+    }
+    
     public void SetRoundState(ERounds state)
     {
         currentRoundState = state;
@@ -216,12 +236,10 @@ public class GameManager : MonoBehaviour
         UpdateCurrentCircuitTimesText();
         if (TargetsManager.Instance.willSpawnNextRound == false)
         {
-            SetRoundState(ERounds.Completed);
-            OnEndCircuit();
-            allRoundTimesInCircuitText.gameObject.SetActive(false);
-            currentRoundTimeText.gameObject.SetActive(false);
-            audioSourceGameManager.PlayOneShot(circuitEndAudioClip);
-            StopCountDown();
+            if (!circuitEndedPrematurely)
+            {
+                _finishCircuitCoroutine = StartCoroutine(FinishCircuitAfterDelay(2f));
+            }
         }
         else
         {
@@ -255,7 +273,6 @@ public class GameManager : MonoBehaviour
 
     private void SaveRoundTime()
     {
-        // For adding a new array element to previousRoundTimes
         float [] newTimes = new float[previousRoundTimes.Length + 1];
         previousRoundTimes.CopyTo(newTimes, 0);
         if (TargetsManager.Instance.targetsRemaining == 0)
