@@ -157,11 +157,11 @@ Transform:
   m_GameObject: {fileID: 1903395835609911244}
   serializedVersion: 2
   m_LocalRotation: {x: -0.70710707, y: -0, z: -0, w: 0.70710653}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.2979, z: 0.0168}
   m_LocalScale: {x: 0.6, y: 0.02, z: 0.6}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 7071798214177610893}
+  m_Father: {fileID: 3642028846027472462}
   m_LocalEulerAnglesHint: {x: -90, y: 0, z: 0}
 --- !u!33 &8221711653062279248
 MeshFilter:
@@ -271,7 +271,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3260372787754929442}
+  - {fileID: 3642028846027472462}
   - {fileID: 5868683799730981930}
   - {fileID: 7827644672083251708}
   m_Father: {fileID: 0}
@@ -288,6 +288,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 81b5112cd08d1034e9f119246b54ed51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: '::'
+  targetMesh: {fileID: 1903395835609911244}
+  targetMeshRenderer: {fileID: 5351113374219730868}
+  polePostRenderer: {fileID: 1188031708402417865}
+  endClipHeight: 0
+  animationDuration: 0.15
+  clipStartOffset: 0.1
+  flashEmissionColor: {r: 1, g: 1, b: 1, a: 1}
+  flashDuration: 0.15
 --- !u!1 &6586178926000459498
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,7 +309,7 @@ GameObject:
   - component: {fileID: 1188031708402417865}
   - component: {fileID: 1637429948694085452}
   m_Layer: 0
-  m_Name: Post
+  m_Name: PolePost
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -316,7 +324,7 @@ Transform:
   m_GameObject: {fileID: 6586178926000459498}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.4, z: -0.082}
+  m_LocalPosition: {x: 0, y: -2.481, z: -0.071}
   m_LocalScale: {x: 0.1, y: 5, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -400,3 +408,35 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &7419037682129208228
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3642028846027472462}
+  m_Layer: 0
+  m_Name: TargetPivot
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3642028846027472462
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7419037682129208228}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.2979, z: -0.0168}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 3260372787754929442}
+  m_Father: {fileID: 7071798214177610893}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
