@@ -7,13 +7,8 @@ public enum CoverSelectionMode { Specific, Random }
 public class RoundTargetData
 {
     public TargetSelectionMode targetSelectionMode = TargetSelectionMode.Random;
-    
-    // Used when mode == Specific
     public int[] specificTargetIndices;
-    
-    // Used when mode == Random (falls back to targetsCountAtRound if you want)
     public int randomTargetCount;
-    
     public CoverSelectionMode coverSelectionMode = CoverSelectionMode.Specific;
     public GameObject coverMeshObject;
 }
@@ -26,5 +21,4 @@ public class StageData : ScriptableObject
     
     // Element 0 is for infinite rounds, mirrors targetCountsAtRound indexing
     public RoundTargetData[] roundTargetData;
-    
 }

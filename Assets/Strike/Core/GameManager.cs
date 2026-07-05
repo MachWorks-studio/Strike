@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip circuitStartAudioClip;
     [SerializeField] private AudioClip circuitEndAudioClip;
     [SerializeField] private AudioClip countDownAudioClip;
-    private AudioSource audioSourceGameManager;
+    [SerializeField] private AudioSource audioSourceGameManager;
     [SerializeField] private MenusUI menusUI;
     [SerializeField] private TMP_Text currentRoundTimeText;
 	[SerializeField] private TMP_Text allRoundTimesInCircuitText;

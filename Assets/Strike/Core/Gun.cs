@@ -115,7 +115,9 @@ public class Gun : MonoBehaviour
         firingSound.Play();
         
         // Shoot Physics Raycast
-        Ray shootRay = new Ray(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward));
+        Ray shootRay = new Ray
+            (projectileOriginLocation.transform.position,
+                projectileOriginLocation.transform.TransformDirection(Vector3.forward));
         if  (Physics.Raycast(shootRay, out RaycastHit hitInfo, 1000f))
         {
             Button button = hitInfo.collider.GetComponent<Button>();
@@ -151,7 +153,9 @@ public class Gun : MonoBehaviour
                 2f
             );
             // Spawn bullet tracer going to empty space here
-            bulletTracerSpawner.SpawnBulletTracer(projectileOriginLocation.transform.position, projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 1000f);
+            bulletTracerSpawner.SpawnBulletTracer
+                (projectileOriginLocation.transform.position,
+                    projectileOriginLocation.transform.TransformDirection(Vector3.forward) * 1000f);
         }
     }
     private void UpdateLaser()

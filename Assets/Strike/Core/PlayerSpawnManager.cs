@@ -5,6 +5,7 @@ using UnityEngine.XR.Management;
 
 public class PlayerSpawnManager : MonoBehaviour
 {
+    [SerializeField] private bool forceSpawnFlatPlayer;
     [SerializeField] private GameObject flatPlayerPrefab;
     [SerializeField] private GameObject vrPlayerPrefab;
     [SerializeField] private Transform playerSpawnTransform;
@@ -15,6 +16,12 @@ public class PlayerSpawnManager : MonoBehaviour
     }
     private IEnumerator DetectAndSpawnPlayer()
     {
+        if (forceSpawnFlatPlayer)
+        {
+            Debug.Log("Force flat player enabled - spawning Flat Player");
+            SpawnPlayer(flatPlayerPrefab);
+            yield break;
+        }
         yield return StartCoroutine(InitializeXR());
 
         bool vrDetected = IsVRHeadSetConnected();

@@ -16,7 +16,7 @@ public class CoverManager : MonoBehaviour
     
     // Shader Setup
     private Renderer coverRenderer;
-    private MaterialPropertyBlock propBlock;
+    private MaterialPropertyBlock materialPropertyBlock;
     private Coroutine activeCoverEffectCoroutine;
     private Coroutine activeFieldEffectCoroutine;
     private float lastClipHeight;
@@ -56,7 +56,7 @@ public class CoverManager : MonoBehaviour
         coverMeshFilter = cover.GetComponent<MeshFilter>();
         coverMeshCollider = cover.GetComponent<MeshCollider>();
         coverRenderer = cover.GetComponent<Renderer>();
-        propBlock = new MaterialPropertyBlock();
+        materialPropertyBlock = new MaterialPropertyBlock();
         cover.gameObject.SetActive(false);
         intersectionShaderPlane.SetActive(false);
         
@@ -112,7 +112,7 @@ public class CoverManager : MonoBehaviour
         float fromHeight = rising ? startY : lastClipHeight;
         float toHeight = rising ? endY : startY;
 
-        propBlock.SetFloat(EdgeWidthID, edgeWidth);
+        materialPropertyBlock.SetFloat(EdgeWidthID, edgeWidth);
         
         if (rising)
         {
@@ -139,9 +139,9 @@ public class CoverManager : MonoBehaviour
     
     private void SetClipHeight(float height)
     {
-        coverRenderer.GetPropertyBlock(propBlock);
-        propBlock.SetFloat(ClipHeightID, height);
-        coverRenderer.SetPropertyBlock(propBlock);
+        coverRenderer.GetPropertyBlock(materialPropertyBlock);
+        materialPropertyBlock.SetFloat(ClipHeightID, height);
+        coverRenderer.SetPropertyBlock(materialPropertyBlock);
         lastClipHeight = height;
     }
     
